@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import CustomButton from '../../atoms/customButton';
+import CustomButton from '../../atoms/CustomButton';
 import { MoleculeContainer } from './styles';
 
 export default function ButtonBundle() {
