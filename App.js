@@ -1,8 +1,10 @@
 import React from 'react';
-import Home from './pages/Home';
+import AppStack from './routes/AppStack';
 
 export default function App() {
   return (
-    <Home />
+      <>
+        <AppStack />
+      </>
   );
 }
