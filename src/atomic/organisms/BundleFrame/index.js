@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import ButtonBundle from '../../molecules/buttonBundle';
+import ButtonBundle from '../../molecules/ButtonBundle';
 import { OrganismContainer } from './styles';
 
 export default function BundleFrame() {
