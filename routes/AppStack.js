@@ -12,7 +12,7 @@ function AppStack(){
         <NavigationContainer>
             <Navigator screenOptions={{ headerShown: false}}>
                 {/* <Screen name="Home" component={Home} /> */}
-                <Screen name="Ops" component={Ops} />
+                <Screen name="Login" component={Login} />
             </Navigator>
         </NavigationContainer>
     );
