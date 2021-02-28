@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-// @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 const styles = StyleSheet.create({
     fundo:{
@@ -28,13 +27,14 @@ const styles = StyleSheet.create({
         marginTop: 52,
         marginBottom: 52,
         alignSelf: 'center',
-        // fontFamily: 'Courgette',
+        // fontFamily: 'Courgette-Regular',
     },
 
     texto:{
         color: '#757575',
         fontSize: 14,
         alignSelf: 'center',
+        // fontFamily: 'Roboto-Regular',
     },
 
     botao:{
