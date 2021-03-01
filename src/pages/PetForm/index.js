@@ -38,9 +38,9 @@ export default function PetForm() {
                     <SwitcherButton onPress={() => setSelected(2)} selected={selected === 2} disabled style={{marginRight: 8}}>Apadrinhar</SwitcherButton>
                     <SwitcherButton onPress={() => setSelected(3)} selected={selected === 3} disabled>Ajuda</SwitcherButton>
                 </SwitcherSelector>
-                <Separator style={{marginTop: 20, marginBottom: 20}}/>
+                <Separator style={{marginTop: 20}}/>
                 <ScrollView showsVerticalScrollIndicator={false} style={{flexGrow: 1, paddingBottom: 50}}>
-                    <FormLabel>{renderFormLabel()}</FormLabel>
+                    <FormLabel style={{marginTop: 20}}>{renderFormLabel()}</FormLabel>
                     <AdoptForm />
                 </ScrollView>
             </View>
