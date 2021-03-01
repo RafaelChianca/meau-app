@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import CustomButton from '../../atoms/CustomButton/Index';
+import CustomButton from '../../atoms/CustomButton/index';
 import FormTextInput from '../../molecules/FormTextInput/index';
-import RadioButton from '../../atoms/RadioButton/Index';
-import SelectButton from '../../atoms/SelectButton/Index';
+import RadioButton from '../../atoms/RadioButton/index';
+import SelectButton from '../../atoms/SelectButton/index';
 import FormRadio from '../../molecules/FormRadio';
 import FormSelect from '../../molecules/FormSelect';
 import { Container } from './styles';
-import CustomTextInput from '../../atoms/CustomTextInput/Index';
+import CustomTextInput from '../../atoms/CustomTextInput/index';
 import ImageSelector from '../../molecules/ImageSelector';
 
 export default function AdoptForm() {

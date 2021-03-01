@@ -1,5 +1,5 @@
 import React from 'react';
-import InputLabel from '../../atoms/InputLabel/Index';
+import InputLabel from '../../atoms/InputLabel/index';
 import { Container, SelectContainer } from './styles';
 
 export default function FormSelect({ label, children, ...rest }) {
