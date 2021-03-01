@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { ScrollView, StatusBar, View, Text } from 'react-native';
 import { Header, Container, Title, Info, Label, Foto } from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import FormTextInput from '../../atomic/molecules/FormTextInput';
 import CustomButton from '../../atomic/atoms/CustomButton';
+import ImageSelector from '../../atomic/molecules/ImageSelector';
 
 export default function Register() {
 
@@ -98,10 +98,11 @@ export default function Register() {
                 />
 
                 <Label>foto de perfil</Label>
-                <Foto>
+                <ImageSelector style={{width: 128, height: 128, alignSelf: 'center', borderRadius: 2, marginTop: 32}} />
+                {/* <Foto>
                     <MaterialIcon name='control-point' color='#757575' size={24}/>
                     <Text style={{fontSize: 14, color: '#757575'}}>adicionar foto</Text>
-                </Foto>
+                </Foto> */}
                 <CustomButton
                     label="FAZER CADASTRO"
                     style={{marginBottom: 24, backgroundColor: '#88c9bf', marginTop: 32}}
