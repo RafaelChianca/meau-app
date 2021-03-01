@@ -1,15 +1,17 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.TouchableOpacity`
-    height: 30px;
-    min-width: 30px;
-    padding: 10px;
-    background-color: blue;
-    align-items: center;
+export const Button = styled.TouchableOpacity`
+    height: 40px;
+    width: 232px;
+    background-color: #ffd358;
     justify-content: center;
-    border-radius: 8px;
+    align-items: center;
+    border-radius: 4px;
+    align-self: center;
 `;
 
-export const ButtonText = styled.Text`
-   color: white;
+export const Label = styled.Text`
+   color: ${props => props.disabled ? '#bdbdbd' : '#434343'};
+   font-size: 12px;
+   text-transform: uppercase;
 `;
