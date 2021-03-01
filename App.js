@@ -1,10 +1,8 @@
 import React from 'react';
-import AppStack from './routes/AppStack';
+import AppStack from './src/routes';
 
 export default function App() {
   return (
-      <>
-        <AppStack />
-      </>
+    <AppStack />
   );
 }
