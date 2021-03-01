@@ -9,5 +9,4 @@ export const SelectContainer = styled.View`
     width: 100%;
     overflow: hidden;
     flex-wrap: wrap;
-    justify-content: space-between;
 `;

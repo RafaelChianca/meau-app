@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.TouchableOpacity`
-    height: 24px;
+    min-height: 24px;
+    min-width: 100px;
     flex-direction: row;
     margin-right: 20px;
 `;

@@ -1,9 +1,11 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.TouchableOpacity`
-    height: 24px;
+    min-height: 24px;
     flex-direction: row;
-    margin-right: 20px;
+    margin-right: 25px;
+    flex: 1;
+    min-width: 100px;
 `;
 
 export const Radio = styled.View`

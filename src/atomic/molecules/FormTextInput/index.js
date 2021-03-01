@@ -8,7 +8,7 @@ export default function FormTextInput({ label, ...rest }) {
       {label &&
         <InputLabel style={{marginBottom: 5}}>{label}</InputLabel>
       }
-      <CustomTextInput placeholder="testssse" {...rest}/>
+      <CustomTextInput placeholder="Placeholder" {...rest}/>
     </>
   );
 }
