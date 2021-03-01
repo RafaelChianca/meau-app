@@ -7,6 +7,7 @@ import FormRadio from '../../molecules/FormRadio';
 import FormSelect from '../../molecules/FormSelect';
 import { Container } from './styles';
 import CustomTextInput from '../../atoms/CustomTextInput/Index';
+import ImageSelector from '../../molecules/ImageSelector';
 
 export default function AdoptForm() {
 
@@ -49,6 +50,7 @@ export default function AdoptForm() {
                 onChangeText={setName}
                 style={{marginBottom: 20}}
             />
+            <ImageSelector label="Fotos do animal" style={{marginBottom: 20}} />
             <FormRadio label="Espécie" style={{marginBottom: 20}}>
                 <RadioButton
                     label="Cachorro"
@@ -112,21 +114,25 @@ export default function AdoptForm() {
                     label="Brincalhão"
                     selected={temperment?.includes(1)}
                     onPress={() => handleSelect(temperment, setTemperment, 1)}
+                    style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Tímido"
                     selected={temperment?.includes(2)}
                     onPress={() => handleSelect(temperment, setTemperment, 2)}
+                    style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Calmo"
                     selected={temperment?.includes(3)}
                     onPress={() => handleSelect(temperment, setTemperment, 3)}
+                    style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Guarda"
                     selected={temperment?.includes(4)}
                     onPress={() => handleSelect(temperment, setTemperment, 4)}
+                    style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Amoroso"
@@ -144,11 +150,13 @@ export default function AdoptForm() {
                     label="Vacinado"
                     selected={health?.includes(1)}
                     onPress={() => handleSelect(health, setHealth, 1)}
+                    style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Vermifugado"
                     selected={health?.includes(2)}
                     onPress={() => handleSelect(health, setHealth, 2)}
+                    style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Castrado"
@@ -172,22 +180,25 @@ export default function AdoptForm() {
                     label="Termo de adoção"
                     selected={conditions?.includes(1)}
                     onPress={() => handleSelect(conditions, setConditions, 1)}
+                    style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Fotos da casa"
                     selected={conditions?.includes(2)}
                     onPress={() => handleSelect(conditions, setConditions, 2)}
+                    style={{minWidth: '100%', marginBottom: 20}}
                 />
                 <SelectButton
                     label="Visita prévia ao animal"
                     selected={conditions?.includes(3)}
                     onPress={() => handleSelect(conditions, setConditions, 3)}
+                    style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Acompanhamento pós adoção"
                     selected={conditions?.includes(4)}
                     onPress={() => handleSelect(conditions, setConditions, 4)}
-                    style={{marginBottom: 12}}
+                    style={{marginBottom: 20, minWidth: '100%'}}
                 />
             </FormSelect>
             <FormSelect style={{marginLeft: 20, marginBottom: 20}}>
@@ -196,21 +207,21 @@ export default function AdoptForm() {
                     disabled={!conditions?.includes(4)}
                     selected={time?.includes(1)}
                     onPress={() => handleSelect(time, setTime, 1)}
-                    style={{width: '100%'}}
+                    style={{minWidth: '100%', marginBottom: 20}}
                 />
                 <SelectButton
                     label="3 meses"
                     disabled={!conditions?.includes(4)}
                     selected={time?.includes(2)}
                     onPress={() => handleSelect(time, setTime, 2)}
-                    style={{width: '100%'}}
+                    style={{minWidth: '100%', marginBottom: 20}}
                 />
                 <SelectButton
                     label="6 meses"
                     disabled={!conditions?.includes(4)}
                     selected={time?.includes(3)}
                     onPress={() => handleSelect(time, setTime, 3)}
-                    style={{width: '100%'}}
+                    style={{minWidth: '100%'}}
                 />
             </FormSelect>
             <FormTextInput
