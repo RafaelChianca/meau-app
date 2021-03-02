@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableWithoutFeedback} from 'react-native';
+import {View, Text, TouchableWithoutFeedback, StatusBar} from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RectButton } from 'react-native-gesture-handler';
@@ -16,7 +16,11 @@ export default class Ops extends React.Component{
     render(){
         return(
             <View style={styles.fundo}>
-                <View style={styles.barraSuperior} />
+                <StatusBar
+                animated={true}
+                backgroundColor="#88c9bf"
+                barStyle={'light-content'}
+                />
                 <View style={styles.header}>
                     <TouchableWithoutFeedback>
                         <Icon name='arrow-left' color='#434343' size={24} style={{marginLeft: 16}}/>

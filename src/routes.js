@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import PetForm from './pages/PetForm';
 import Ops from './pages/Ops';
 import Register from './pages/Register';
+import Login from './pages/Login';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -15,7 +16,7 @@ function AppStack(){
                 <Screen name="PetForm" component={PetForm} />
                 <Screen name="Ops" component={Ops} />
                 <Screen name="Register" component={Register} />
-                {/* <Screen name="Login" component={Login} /> */}
+                <Screen name="Login" component={Login} />
             </Navigator>
         </NavigationContainer>
     );
