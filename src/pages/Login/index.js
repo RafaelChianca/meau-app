@@ -4,11 +4,26 @@ import { Header, Container, Title} from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FormTextInput from '../../atomic/molecules/FormTextInput';
 import CustomButton from '../../atomic/atoms/CustomButton';
+import {signIn} from '../../api/firebaseMethods';
 
 export default function Register() {
 
     const [nome, setNome] = useState('');
     const [senha, setSenha] = useState('');
+
+    const handlePress = () => {
+        if (!nome) {
+          Alert.alert('Nome field is required.');
+        }
+    
+        if (!senha) {
+          Alert.alert('Senha field is required.');
+        }
+    
+        signIn(nome, senha);
+        setNome('');
+        setSenha('');
+      };
 
     return(
         <Container>
@@ -50,6 +65,7 @@ export default function Register() {
                 justifyContent: 'center',
                 alignSelf: 'center',
                 marginTop: 52,}}
+                onPress={handlePress}
             />
         </Container>
     );
