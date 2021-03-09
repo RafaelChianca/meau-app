@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import {TouchableWithoutFeedback, StatusBar} from 'react-native';
+import {TouchableWithoutFeedback, StatusBar, Alert} from 'react-native';
 import { Header, Container, Title} from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FormTextInput from '../../atomic/molecules/FormTextInput';
 import CustomButton from '../../atomic/atoms/CustomButton';
 import {signIn} from '../../api/firebaseMethods';
+
 
 export default function Register() {
 
@@ -13,14 +14,16 @@ export default function Register() {
 
     const handlePress = () => {
         if (!nome) {
-          Alert.alert('Nome field is required.');
+          Alert.alert('Por favor, digite seu nome de usuário');
         }
     
         if (!senha) {
-          Alert.alert('Senha field is required.');
+          Alert.alert('Por favor, digite sua senha');
         }
     
         signIn(nome, senha);
+
+        Alert.alert('Login realizado com sucesso');
         setNome('');
         setSenha('');
       };
@@ -37,14 +40,14 @@ export default function Register() {
                 <TouchableWithoutFeedback>
                     <Icon name='bars' color='#434343' size={24} style={{marginLeft: 16}}/> 
                 </TouchableWithoutFeedback>
-                <Title>Cadastro Pessoal</Title>
+                <Title>Login</Title>
             </Header>
 
             <FormTextInput
-                placeholder="Nome completo"
+                placeholder="Nome de usuário"
                 placeholderTextColor="#bdbdbd"
                 value={nome}
-                onChangeText={setNome}
+                onChangeText={(nome) => setNome(nome)}
                 style={{marginTop: 64, color:"#434343", marginLeft: 28, marginRight: 16, fontSize: 17}}
             />
 
@@ -52,7 +55,7 @@ export default function Register() {
                 placeholder="Senha"
                 placeholderTextColor="#bdbdbd"
                 value={senha}
-                onChangeText={setSenha}
+                onChangeText={(senha) => setSenha(senha)}
                 style={{marginTop: 20, color:"#434343", marginLeft: 28, marginRight: 16, fontSize: 17}}
             />
             <CustomButton
