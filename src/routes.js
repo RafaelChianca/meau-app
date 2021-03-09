@@ -13,9 +13,9 @@ function AppStack(){
     return (
         <NavigationContainer>
             <Navigator initialRouteName="Register" screenOptions={{ headerShown: false}}>
-                <Screen name="PetForm" component={PetForm} />
-                <Screen name="Ops" component={Ops} />
-                <Screen name="Register" component={Register} />
+                {/* <Screen name="PetForm" component={PetForm} />
+                <Screen name="Ops" component={Ops} /> */}
+                {/* <Screen name="Register" component={Register} /> */}
                 <Screen name="Login" component={Login} />
             </Navigator>
         </NavigationContainer>

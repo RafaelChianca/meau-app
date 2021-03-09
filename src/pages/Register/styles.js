@@ -40,7 +40,7 @@ export const Label = styled.Text`
     color: #88c9bf;
     font-size: 14px;
     text-transform: uppercase;
-    margin-top: 28px;
+    margin-top: 28px; 
     margin-left: 28px;
 `;
 

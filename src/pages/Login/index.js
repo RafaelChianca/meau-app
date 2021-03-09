@@ -1,49 +1,56 @@
-import React from 'react';
-import {View, Text, TextInput, TouchableWithoutFeedback, StatusBar} from 'react-native';
-import styles from './styles';
+import React, { useState } from 'react';
+import {TouchableWithoutFeedback, StatusBar} from 'react-native';
+import { Header, Container, Title} from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { RectButton } from 'react-native-gesture-handler';
+import FormTextInput from '../../atomic/molecules/FormTextInput';
+import CustomButton from '../../atomic/atoms/CustomButton';
 
-export default class Login extends React.Component{
-    constructor(){
-        super();
-    
-        this.state = {
-            nome: '',
-            senha: '',
-        }
-    }
+export default function Register() {
 
-    render(){
-        return(
-            <View style={styles.fundo}>
-                <StatusBar
-                animated={true}
+    const [nome, setNome] = useState('');
+    const [senha, setSenha] = useState('');
+
+    return(
+        <Container>
+            <StatusBar
+                animated
                 backgroundColor="#88c9bf"
-                barStyle={'light-content'}
-                />
-                <View style={styles.header}>
-                    <TouchableWithoutFeedback>
-                        <Icon name='bars' color='#434343' size={24} style={{marginLeft: 16}}/> 
-                    </TouchableWithoutFeedback>
-                    <Text style={{marginLeft:30, fontSize:18}}>Login</Text>
-                </View>
-                <TextInput style={[styles.inputs, {marginTop: 64}]}
-                value={this.state.nome}
-                onChangeText={(nome) => this.setState({nome})}
-                placeholder={'Nome de Usuário'}
-                placeholderTextColor={'#bdbdbd'}
-                />
-                <TextInput style={[styles.inputs, {marginTop: 20}]}
-                value={this.state.senha}
-                onChangeText={(senha) => this.setState({senha})}
-                placeholder={'Senha'}
-                placeholderTextColor={'#bdbdbd'}
-                />
-                <RectButton style={styles.botaoEntrar}>
-                    <Text>ENTRAR</Text>
-                </RectButton>
-            </View>
-            );
-    }
+                barStyle={"light-content"}
+            />
+
+            <Header>
+                <TouchableWithoutFeedback>
+                    <Icon name='bars' color='#434343' size={24} style={{marginLeft: 16}}/> 
+                </TouchableWithoutFeedback>
+                <Title>Cadastro Pessoal</Title>
+            </Header>
+
+            <FormTextInput
+                placeholder="Nome completo"
+                placeholderTextColor="#bdbdbd"
+                value={nome}
+                onChangeText={setNome}
+                style={{marginTop: 64, color:"#434343", marginLeft: 28, marginRight: 16, fontSize: 17}}
+            />
+
+            <FormTextInput
+                placeholder="Senha"
+                placeholderTextColor="#bdbdbd"
+                value={senha}
+                onChangeText={setSenha}
+                style={{marginTop: 20, color:"#434343", marginLeft: 28, marginRight: 16, fontSize: 17}}
+            />
+            <CustomButton
+                label="ENTRAR"
+                style={{backgroundColor: '#88c9bf',
+                borderRadius: 2,
+                width:232,
+                height:40,
+                alignItems: 'center',
+                justifyContent: 'center',
+                alignSelf: 'center',
+                marginTop: 52,}}
+            />
+        </Container>
+    );
 }
