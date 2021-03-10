@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { ScrollView, StatusBar, View, Text } from 'react-native';
-import { Header, Container, Title, Info, Label, Foto } from './styles';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { ScrollView, StatusBar, Text } from 'react-native';
+import { Container, Info, Label } from './styles';
 import FormTextInput from '../../atomic/molecules/FormTextInput';
 import CustomButton from '../../atomic/atoms/CustomButton';
 import ImageSelector from '../../atomic/molecules/ImageSelector';
+import { useNavigation } from '@react-navigation/native';
+import CustomHeader from '../../atomic/molecules/CustomHeader';
 
 export default function Register() {
 
@@ -18,6 +19,8 @@ export default function Register() {
     const [senha, setSenha] = useState('');
     const [confirmacao, setConfirmacao] = useState('');
 
+    const navigation = useNavigation();
+
     return(
         <Container>
             <StatusBar
@@ -25,10 +28,7 @@ export default function Register() {
                 backgroundColor="#88c9bf"
                 barStyle={"light-content"}
             />
-            <Header>
-                <Icon style={{marginLeft: 16}} name='bars' color='#434343' size={24}/>
-                <Title>Cadastro Pessoal</Title>
-            </Header>
+            <CustomHeader label='Cadastro Pessoal' style={{backgroundColor: '#cfe9e5'}} />
             <ScrollView showsVerticalScrollIndicator={false} style={{flexGrow: 1, paddingBottom: 50}}>
 
                 <Info>

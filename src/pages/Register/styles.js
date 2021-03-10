@@ -8,15 +8,6 @@ export const Container = styled(SafeAreaView)`
     padding: 0;
 `;
 
-export const Header = styled.View`
-    background-color: #cfe9e5;
-    width: 100%;
-    height: 56px;
-    flex-direction: row;
-    align-items: center;
-
-`;
-
 export const Title = styled.Text`
     font-size: 20px;
     color: #434343;
