@@ -23,7 +23,7 @@ export default function Register() {
     
         signIn(nome, senha);
 
-        Alert.alert('Login realizado com sucesso');
+        // Alert.alert('Login realizado com sucesso');
         setNome('');
         setSenha('');
       };
