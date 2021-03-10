@@ -12,17 +12,17 @@ export default function Register() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
 
-    function handlePress() {
+    const handlePress = async () => {
         if (!name) {
-          Alert.alert('Por favor, digite seu name de usuário');
+          Alert.alert('Por favor, digite seu nome de usuário');
         }
     
         if (!password) {
           Alert.alert('Por favor, digite sua password');
         }
     
-        signIn(name, password);
-
+        await signIn(name, password);
+        
         Alert.alert('Login realizado com sucesso');
         setName('');
         setPassword('');
