@@ -1,8 +1,12 @@
 import React from 'react';
-import AppStack from './src/routes';
+import { NavigationContainer } from '@react-navigation/native';
+import AppStack from './src/routes/AppStack';
+import { navigationRef } from './src/services/RootNavigation';
 
 export default function App() {
   return (
-    <AppStack />
+    <NavigationContainer ref={navigationRef} >
+      <AppStack />
+    </NavigationContainer>
   );
 }
