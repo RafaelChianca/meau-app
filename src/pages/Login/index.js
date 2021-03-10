@@ -12,7 +12,7 @@ export default function Register() {
     const [nome, setNome] = useState('');
     const [senha, setSenha] = useState('');
 
-    const handlePress = () => {
+    const handlePress = async () => {
         if (!nome) {
           Alert.alert('Por favor, digite seu nome de usuário');
         }
@@ -20,10 +20,9 @@ export default function Register() {
         if (!senha) {
           Alert.alert('Por favor, digite sua senha');
         }
-    
-        signIn(nome, senha);
-
-        // Alert.alert('Login realizado com sucesso');
+        
+        await signIn(nome, senha);
+        Alert.alert('Login realizado com sucesso');
         setNome('');
         setSenha('');
       };
