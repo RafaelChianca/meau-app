@@ -1,31 +1,45 @@
-import React, { useState } from 'react';
-import {TouchableWithoutFeedback, StatusBar, Alert} from 'react-native';
-import { Header, Container, Title} from './styles';
+import React, { useEffect, useState } from 'react';
+import { TouchableWithoutFeedback, StatusBar, Alert, Keyboard } from 'react-native';
+import { Header, Container, Title } from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FormTextInput from '../../atomic/molecules/FormTextInput';
 import CustomButton from '../../atomic/atoms/CustomButton';
-import {signIn} from '../../api/firebaseMethods';
+import { signIn } from '../../services/firebaseMethods';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function Register() {
 
-    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState(false);
     const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState(false);
+
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        return () => {
+            setEmail('');
+            setPassword('');
+        }
+    }, [])
 
     const handlePress = async () => {
-        if (!name) {
+        Keyboard.dismiss();
+
+        if (email?.length === 0) {
           Alert.alert('Por favor, digite seu nome de usuário');
+          setEmailError(true);
+          return
         }
     
-        if (!password) {
-          Alert.alert('Por favor, digite sua password');
+        if (password?.length === 0) {
+          Alert.alert('Por favor, digite sua senha');
+          setPasswordError(true);
+          return
         }
     
-        await signIn(name, password);
-        
-        Alert.alert('Login realizado com sucesso');
-        setName('');
-        setPassword('');
+        await signIn(email, password);
     };
 
     return(
@@ -36,25 +50,26 @@ export default function Register() {
                 barStyle={'light-content'}
             />
             <Header>
-                <TouchableWithoutFeedback>
-                    <Icon name={'bars'} color={'#434343'} size={24} style={{marginLeft: 16}}/> 
-                </TouchableWithoutFeedback>
+                <Icon name={'bars'} color={'#434343'} size={24} style={{marginLeft: 16}} onPress={() => navigation.openDrawer()}/> 
                 <Title>Login</Title>
             </Header>
             <FormTextInput
-                placeholder={'e-mail'}
+                placeholder="E-mail"
                 placeholderTextColor='#bdbdbd'
-                value={name}
-                onChangeText={(name) => setName(name)}
+                value={email}
+                keyboardType="email-address"
+                onChangeText={(email) => setEmail(email)}
                 style={{marginTop: 64, color:'#434343', marginLeft: 28, marginRight: 16, fontSize: 17}}
             />
             <FormTextInput
                 placeholder='Senha'
                 placeholderTextColor='#bdbdbd'
                 value={password}
+                autoCapitalize="none"
                 secureTextEntry={true}
                 onChangeText={(password) => setPassword(password)}
                 style={{marginTop: 20, color:'#434343', marginLeft: 28, marginRight: 16, fontSize: 17}}
+                onSubmitEditing={handlePress}
             />
             <CustomButton
                 label='ENTRAR'
