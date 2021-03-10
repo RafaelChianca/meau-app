@@ -9,65 +9,65 @@ import {signIn} from '../../api/firebaseMethods';
 
 export default function Register() {
 
-    const [nome, setNome] = useState('');
-    const [senha, setSenha] = useState('');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
 
-    const handlePress = () => {
-        if (!nome) {
-          Alert.alert('Por favor, digite seu nome de usuário');
+    function handlePress() {
+        if (!name) {
+          Alert.alert('Por favor, digite seu name de usuário');
         }
     
-        if (!senha) {
-          Alert.alert('Por favor, digite sua senha');
+        if (!password) {
+          Alert.alert('Por favor, digite sua password');
         }
     
-        signIn(nome, senha);
+        signIn(name, password);
 
         Alert.alert('Login realizado com sucesso');
-        setNome('');
-        setSenha('');
-      };
+        setName('');
+        setPassword('');
+    };
 
     return(
         <Container>
             <StatusBar
                 animated
-                backgroundColor="#88c9bf"
-                barStyle={"light-content"}
+                backgroundColor={'#88c9bf'}
+                barStyle={'light-content'}
             />
-
             <Header>
                 <TouchableWithoutFeedback>
-                    <Icon name='bars' color='#434343' size={24} style={{marginLeft: 16}}/> 
+                    <Icon name={'bars'} color={'#434343'} size={24} style={{marginLeft: 16}}/> 
                 </TouchableWithoutFeedback>
                 <Title>Login</Title>
             </Header>
-
             <FormTextInput
-                placeholder="Nome de usuário"
-                placeholderTextColor="#bdbdbd"
-                value={nome}
-                onChangeText={(nome) => setNome(nome)}
-                style={{marginTop: 64, color:"#434343", marginLeft: 28, marginRight: 16, fontSize: 17}}
+                placeholder={'e-mail'}
+                placeholderTextColor='#bdbdbd'
+                value={name}
+                onChangeText={(name) => setName(name)}
+                style={{marginTop: 64, color:'#434343', marginLeft: 28, marginRight: 16, fontSize: 17}}
             />
-
             <FormTextInput
-                placeholder="Senha"
-                placeholderTextColor="#bdbdbd"
-                value={senha}
-                onChangeText={(senha) => setSenha(senha)}
-                style={{marginTop: 20, color:"#434343", marginLeft: 28, marginRight: 16, fontSize: 17}}
+                placeholder='Senha'
+                placeholderTextColor='#bdbdbd'
+                value={password}
+                secureTextEntry={true}
+                onChangeText={(password) => setPassword(password)}
+                style={{marginTop: 20, color:'#434343', marginLeft: 28, marginRight: 16, fontSize: 17}}
             />
             <CustomButton
-                label="ENTRAR"
-                style={{backgroundColor: '#88c9bf',
-                borderRadius: 2,
-                width:232,
-                height:40,
-                alignItems: 'center',
-                justifyContent: 'center',
-                alignSelf: 'center',
-                marginTop: 52,}}
+                label='ENTRAR'
+                style={{
+                    backgroundColor: '#88c9bf',
+                    borderRadius: 2,
+                    width:232,
+                    height:40,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                    marginTop: 52,
+                }}
                 onPress={handlePress}
             />
         </Container>

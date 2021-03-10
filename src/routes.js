@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
 import apiKeys from './config/keys';
 
 import PetForm from './pages/PetForm';
@@ -16,7 +16,7 @@ function AppStack(){
     if (!firebase.apps.length) {
         console.log('Connected with Firebase')
         firebase.initializeApp(apiKeys.firebaseConfig);
-      }
+    }
 
     return (
         <NavigationContainer>

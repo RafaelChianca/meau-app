@@ -1,6 +1,6 @@
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
 import {Alert} from "react-native";
-import "firebase/firestore";
+import 'firebase/firestore';
 
 export async function signIn(email, password) {
     try {
