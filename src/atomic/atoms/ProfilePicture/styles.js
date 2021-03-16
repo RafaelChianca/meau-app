@@ -7,6 +7,7 @@ export const Container = styled.View`
     background-color: #f1f2f2;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 `;
 
 export const Picture = styled.ImageBackground`
