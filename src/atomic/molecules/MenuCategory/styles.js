@@ -29,6 +29,7 @@ export const IconContainer = styled.View`
 
 export const ChildrenContainer = styled.View`
     padding-left: 48px;
+    flex: 1;
 `;
 
 export const Label = styled.Text`
