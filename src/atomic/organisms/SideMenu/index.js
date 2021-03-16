@@ -1,11 +1,8 @@
-import React from 'react';
-import { DrawerItem } from '@react-navigation/drawer';
-import { Drawer } from './styles';
+import React, { useState } from 'react';
 import { MenuHeader } from '../../molecules/MenuHeader';
 import MenuCategory from '../../molecules/MenuCategory';
-import CustomButton from '../../atoms/CustomButton';
 import { MenuItem } from '../../molecules/MenuItem';
-import { useState } from 'react/cjs/react.development';
+import { Drawer, LogoutButton } from './styles';
 
 export const SideMenu = (props) => {
 
@@ -59,7 +56,7 @@ export const SideMenu = (props) => {
                 icon={{name: 'gear'}}
                 expandable={false}
             />
-            <CustomButton style={{width: '100%', backgroundColor: '#88c9bf'}} label='Sair' />
+            <LogoutButton label='Sair' />
         </Drawer>
     );
 }
