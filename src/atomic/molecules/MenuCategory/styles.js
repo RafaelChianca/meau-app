@@ -1,15 +1,14 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-    min-height: 48px;
 `;
 
 export const Header = styled.TouchableOpacity`
+    height: 48px;
+    width: 100%;
     flex-direction: row;
     background-color: #e6e7e8;
-    width: 100%;
     padding: 16px;
-    flex: 1;
     align-items: center;
     justify-content: space-between;
 `;
@@ -29,7 +28,6 @@ export const IconContainer = styled.View`
 
 export const ChildrenContainer = styled.View`
     padding-left: 48px;
-    flex: 1;
 `;
 
 export const Label = styled.Text`
