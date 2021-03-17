@@ -44,37 +44,37 @@ export default function Register() {
                     placeholder="Nome completo"
                     value={nome}
                     onChangeText={setNome}
-                    style={{marginTop: 32, marginLeft: 28, marginRight: 16}}
+                    containerStyle={{marginTop: 32, marginLeft: 28, marginRight: 16}}
                 />
                 <FormTextInput
                     placeholder="Idade"
                     value={idade}
                     onChangeText={setIdade}
-                    style={{marginTop: 28, marginLeft: 28, marginRight: 16}}
+                    containerStyle={{marginTop: 28, marginLeft: 28, marginRight: 16}}
                 />
                 <FormTextInput
                     placeholder="E-mail"
                     value={email}
                     onChangeText={setEmail}
-                    style={{marginTop: 28, marginLeft: 28, marginRight: 16}}
+                    containerStyle={{marginTop: 28, marginLeft: 28, marginRight: 16}}
                 />
                 <FormTextInput
                     placeholder="Estado"
                     value={estado}
                     onChangeText={setEstado}
-                    style={{marginTop: 28, marginLeft: 28, marginRight: 16}}
+                    containerStyle={{marginTop: 28, marginLeft: 28, marginRight: 16}}
                 />
                 <FormTextInput
                     placeholder="Cidade"
                     value={cidade}
                     onChangeText={setCidade}
-                    style={{marginTop: 28, marginLeft: 28, marginRight: 16}}
+                    containerStyle={{marginTop: 28, marginLeft: 28, marginRight: 16}}
                 />
                 <FormTextInput
                     placeholder="Telefone"
                     value={telefone}
                     onChangeText={setTelefone}
-                    style={{marginTop: 28, marginLeft: 28, marginRight: 16}}
+                    containerStyle={{marginTop: 28, marginLeft: 28, marginRight: 16}}
                 />
 
                 <Label>informações de perfil</Label>
@@ -82,13 +82,13 @@ export default function Register() {
                     placeholder="Nome de usuário"
                     value={usuario}
                     onChangeText={setUsuario}
-                    style={{marginTop: 28, marginLeft: 28, marginRight: 16}}
+                    containerStyle={{marginTop: 28, marginLeft: 28, marginRight: 16}}
                 />
                 <FormTextInput
                     placeholder="Senha"
                     value={senha}
                     onChangeText={setSenha}
-                    style={{marginTop: 28, marginLeft: 28, marginRight: 16}}
+                    containerStyle={{marginTop: 28, marginLeft: 28, marginRight: 16}}
                     autoCapitalize="none"
                     secureTextEntry={true}
                 />
@@ -96,7 +96,7 @@ export default function Register() {
                     placeholder="Confirmação de senha"
                     value={confirmacao}
                     onChangeText={setConfirmacao}
-                    style={{marginTop: 28, marginLeft: 28, marginRight: 16}}
+                    containerStyle={{marginTop: 28, marginLeft: 28, marginRight: 16}}
                     autoCapitalize="none"
                     secureTextEntry={true}
                 />

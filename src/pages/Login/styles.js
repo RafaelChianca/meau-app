@@ -14,6 +14,12 @@ export const Header = styled.View`
     align-items: center;
 `;
 
+export const FormContainer = styled.View`
+    flex: 1;
+    padding-left: 28px;
+    padding-right: 28px;
+`;
+
 export const Title = styled.Text`
     font-size: 20px;
     color: #434343;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableWithoutFeedback, StatusBar, Alert, Keyboard } from 'react-native';
-import { Header, Container, Title } from './styles';
+import { StatusBar, Keyboard } from 'react-native';
+import { Header, Container, Title, FormContainer } from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FormTextInput from '../../atomic/molecules/FormTextInput';
 import CustomButton from '../../atomic/atoms/CustomButton';
@@ -11,9 +11,9 @@ import { useNavigation } from '@react-navigation/native';
 export default function Register() {
 
     const [email, setEmail] = useState('');
-    const [emailError, setEmailError] = useState(false);
+    const [emailError, setEmailError] = useState(null);
     const [password, setPassword] = useState('');
-    const [passwordError, setPasswordError] = useState(false);
+    const [passwordError, setPasswordError] = useState(null);
 
     const navigation = useNavigation();
 
@@ -21,6 +21,8 @@ export default function Register() {
         return () => {
             setEmail('');
             setPassword('');
+            setEmailError(null);
+            setPasswordError(null);
         }
     }, [])
 
@@ -28,16 +30,19 @@ export default function Register() {
         Keyboard.dismiss();
 
         if (email?.length === 0) {
-          Alert.alert('Por favor, digite seu nome de usuário');
-          setEmailError(true);
-          return
+          setEmailError('Por favor, digite seu email');
+        } else {
+          setEmailError(null);
         }
     
         if (password?.length === 0) {
-          Alert.alert('Por favor, digite sua senha');
-          setPasswordError(true);
+          setPasswordError('Por favor, digite sua senha');
           return
+        } else {
+          setPasswordError(null);
         }
+
+        if (emailError || passwordError) return
     
         await signIn(email, password);
     };
@@ -53,38 +58,42 @@ export default function Register() {
                 <Icon name={'bars'} color={'#434343'} size={24} style={{marginLeft: 16}} onPress={() => navigation.openDrawer()}/> 
                 <Title>Login</Title>
             </Header>
-            <FormTextInput
-                placeholder="E-mail"
-                placeholderTextColor='#bdbdbd'
-                value={email}
-                keyboardType="email-address"
-                onChangeText={(email) => setEmail(email)}
-                style={{marginTop: 64, color:'#434343', marginLeft: 28, marginRight: 16, fontSize: 17}}
-            />
-            <FormTextInput
-                placeholder='Senha'
-                placeholderTextColor='#bdbdbd'
-                value={password}
-                autoCapitalize="none"
-                secureTextEntry={true}
-                onChangeText={(password) => setPassword(password)}
-                style={{marginTop: 20, color:'#434343', marginLeft: 28, marginRight: 16, fontSize: 17}}
-                onSubmitEditing={handlePress}
-            />
-            <CustomButton
-                label='ENTRAR'
-                style={{
-                    backgroundColor: '#88c9bf',
-                    borderRadius: 2,
-                    width:232,
-                    height:40,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    alignSelf: 'center',
-                    marginTop: 52,
-                }}
-                onPress={handlePress}
-            />
+            <FormContainer>
+                <FormTextInput
+                    placeholder="E-mail"
+                    placeholderTextColor='#bdbdbd'
+                    value={email}
+                    error={emailError}
+                    keyboardType="email-address"
+                    onChangeText={(email) => setEmail(email)}
+                    containerStyle={{marginTop: 64, color:'#434343'}}
+                />
+                <FormTextInput
+                    placeholder='Senha'
+                    placeholderTextColor='#bdbdbd'
+                    error={passwordError}
+                    value={password}
+                    autoCapitalize="none"
+                    secureTextEntry={true}
+                    onChangeText={(password) => setPassword(password)}
+                    containerStyle={{marginTop: 20, color:'#434343'}}
+                    onSubmitEditing={handlePress}
+                />
+                <CustomButton
+                    label='ENTRAR'
+                    style={{
+                        backgroundColor: '#88c9bf',
+                        borderRadius: 2,
+                        width:232,
+                        height:40,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        marginTop: 52,
+                    }}
+                    onPress={handlePress}
+                />
+            </FormContainer>
         </Container>
     );
 }

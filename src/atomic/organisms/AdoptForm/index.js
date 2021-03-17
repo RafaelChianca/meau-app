@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import CustomButton from '../../atoms/CustomButton/index';
-import FormTextInput from '../../molecules/FormTextInput/index';
+import FormTextInput from '../../molecules/FormTextInput';
 import RadioButton from '../../atoms/RadioButton/index';
 import SelectButton from '../../atoms/SelectButton/index';
 import FormRadio from '../../molecules/FormRadio';
 import FormSelect from '../../molecules/FormSelect';
 import { Container } from './styles';
-import CustomTextInput from '../../atoms/CustomTextInput/index';
 import ImageSelector from '../../molecules/ImageSelector';
 
 export default function AdoptForm() {
@@ -48,7 +47,7 @@ export default function AdoptForm() {
                 placeholder="Nome do animal"
                 value={name}
                 onChangeText={setName}
-                style={{marginBottom: 20}}
+                containerStyle={{marginBottom: 20}}
             />
             <ImageSelector label="Fotos do animal" style={{marginBottom: 20}} />
             <FormRadio label="Espécie" style={{marginBottom: 20}}>
@@ -169,11 +168,11 @@ export default function AdoptForm() {
                     onPress={() => handleSelect(health, setHealth, 4)}
                 />
             </FormSelect>
-            <CustomTextInput
+            <FormTextInput
                 placeholder="Doenças do animal"
                 value={diseases}
                 onChangeText={setDiseases}
-                style={{marginBottom: 20}}
+                containerStyle={{marginBottom: 20}}
             />
             <FormSelect label="Exigências para adoção">
                 <SelectButton
@@ -229,7 +228,7 @@ export default function AdoptForm() {
                 placeholder="Sobre o animal"
                 value={about}
                 onChangeText={setAbout}
-                style={{marginBottom: 24}}
+                containerStyle={{marginBottom: 24}}
             />
             <CustomButton
                 label="Colocar para adoção"
