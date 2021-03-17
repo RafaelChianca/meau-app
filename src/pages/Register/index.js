@@ -89,12 +89,16 @@ export default function Register() {
                     value={senha}
                     onChangeText={setSenha}
                     style={{marginTop: 28, marginLeft: 28, marginRight: 16}}
+                    autoCapitalize="none"
+                    secureTextEntry={true}
                 />
                 <FormTextInput
                     placeholder="Confirmação de senha"
                     value={confirmacao}
                     onChangeText={setConfirmacao}
                     style={{marginTop: 28, marginLeft: 28, marginRight: 16}}
+                    autoCapitalize="none"
+                    secureTextEntry={true}
                 />
 
                 <Label>foto de perfil</Label>
