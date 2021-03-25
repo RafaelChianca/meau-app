@@ -22,7 +22,7 @@ export default function Introduction() {
             <HelloText>Olá!</HelloText>
             <IntroText>Bem vindo ao Meau!{"\n"}Aqui você pode adotar, doar e ajudar cães e gatos com facilidade.{"\n"}Qual o seu interesse?</IntroText>
             <OptionButton label='adotar' onPress={openAdoption} />
-            <OptionButton label='ajudar' onPress={openHelp} />
+            <OptionButton label='ajudar' onPress={openHelp} disabled />
             <OptionButton label='cadastrar animal' onPress={openRegisterPet} />
             <LogoContainer source={MeauBlue} />
         </Container>

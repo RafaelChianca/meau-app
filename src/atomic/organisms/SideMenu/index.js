@@ -31,6 +31,10 @@ export const SideMenu = (props) => {
                     <MenuItem
                         label='Cadastrar um pet'
                         onPress={() => navigation.navigate('RegisterPet')}
+                    />
+                    <MenuItem
+                        label='Adotar um pet'
+                        onPress={() => navigation.navigate('Adopt')}
                         separator={false}
                     />
                 </MenuCategory>
