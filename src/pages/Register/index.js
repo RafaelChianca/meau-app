@@ -6,6 +6,7 @@ import CustomButton from '../../atomic/atoms/CustomButton';
 import ImageSelector from '../../atomic/molecules/ImageSelector';
 import { useNavigation } from '@react-navigation/native';
 import CustomHeader from '../../atomic/molecules/CustomHeader';
+import {registerUser} from "../../services/firebaseMethods";
 
 export default function Register() {
 
@@ -20,6 +21,44 @@ export default function Register() {
     const [confirmacao, setConfirmacao] = useState('');
 
     const navigation = useNavigation();
+
+    const handlePress = () => {
+        if (!nome) {
+          Alert.alert('Preencha o campo do nome');
+        } else if (!idade) {
+          Alert.alert('Preencha o campo da idade');
+        } else if (!email) {
+            Alert.alert('Preencha o campo do email');
+        } else if (!estado) {
+            Alert.alert('Preencha o campo do estado');
+        } else if (!cidade) {
+            Alert.alert('Preencha o campo da cidade');
+        } else if (!telefone) {
+            Alert.alert('Preencha o campo do telefone');
+        } else if (!usuario) {
+            Alert.alert('Preencha o campo do usuario');
+        } else if (!senha) {
+          Alert.alert('Preencha o campo da senha');
+        } else if (!confirmacao) {
+          setSenha('');
+          Alert.alert('Preencha o campo de confirmação da senha');
+        } else if (senha !== confirmacao) {
+          Alert.alert('Senhas diferentes');
+        } else {
+          registerUser(
+            nome,
+            idade,
+            email,
+            estado,
+            cidade,
+            telefone,
+            usuario,
+            senha
+          );
+        //   navigation.navigate('Login');
+        //   emptyState();
+        }
+      };
 
     return(
         <Container>
@@ -110,6 +149,7 @@ export default function Register() {
                 <CustomButton
                     label="FAZER CADASTRO"
                     style={{marginBottom: 24, backgroundColor: '#88c9bf', marginTop: 32}}
+                    onPress={handlePress}
                 />
             </ScrollView>
 
