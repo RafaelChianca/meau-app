@@ -5,7 +5,7 @@ export const Container = styled.View`
     width: 100%;
     flex-direction: row;
     z-index: 10;
-    background-color: #ffd358;
+    background-color: white;
     align-items: center;
     justify-content: center;
     margin-bottom: 16px;
@@ -28,20 +28,19 @@ export const MiddleContainer = styled.View`
     height: 100%;
     width: 60%;
     justify-content: center;
-    align-items: center;
 `;
 
 export const Label = styled.Text`
    color: #434343;
    font-size: 20px;
    text-transform: capitalize;
-   font-weight: bold;
+   font-weight: 600;
 `;
 
 export const EndContainer = styled.View`
     height: 100%;
-    width: 26%;
-    justify-content: flex-end;
+    width: 20%;
+    justify-content: center;
     align-items: flex-end;
 `;
 
