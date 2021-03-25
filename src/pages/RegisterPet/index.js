@@ -4,10 +4,10 @@ import Separator from '../../atomic/atoms/Separator';
 import SwitcherButton from '../../atomic/atoms/SwitcherButton';
 import CustomHeader from '../../atomic/molecules/CustomHeader/index';
 import SwitcherSelector from '../../atomic/molecules/SwitcherSelector';
-import AdoptForm from '../../atomic/organisms/AdoptForm';
+import PertForm from '../../atomic/organisms/PertForm';
 import { Container, FormLabel } from './styles';
 
-export default function PetForm() {
+export default function RegisterPet() {
 
     const [selected, setSelected] = useState(1);
 
@@ -31,7 +31,7 @@ export default function PetForm() {
                 backgroundColor="#f7a800"
                 barStyle={'light-content'}
             />
-            <CustomHeader label="Cadastro do animal" />
+            <CustomHeader label="Cadastro do animal" style={{backgroundColor: '#ffd358'}} />
             <View style={{flex: 1, paddingLeft: 24, paddingRight: 24}}>
                 <SwitcherSelector label="Tenho interesse em cadastrar o animal para:">
                     <SwitcherButton onPress={() => setSelected(1)} selected={selected === 1} style={{marginRight: 8}}>Adoção</SwitcherButton>
@@ -41,7 +41,7 @@ export default function PetForm() {
                 <Separator style={{marginTop: 20}}/>
                 <ScrollView showsVerticalScrollIndicator={false} style={{flexGrow: 1, paddingBottom: 50}}>
                     <FormLabel style={{marginTop: 20}}>{renderFormLabel()}</FormLabel>
-                    <AdoptForm />
+                    <PertForm />
                 </ScrollView>
             </View>
         </Container>

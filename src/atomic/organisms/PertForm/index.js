@@ -8,7 +8,7 @@ import FormSelect from '../../molecules/FormSelect';
 import { Container } from './styles';
 import ImageSelector from '../../molecules/ImageSelector';
 
-export default function AdoptForm() {
+export default function PertForm() {
 
     const [name, setName] = useState('');
     const [species, setSpecies] = useState(0);
