@@ -9,7 +9,7 @@ export async function signIn(email, password) {
   .signInWithEmailAndPassword(email, password)
   .then(() => {
     Alert.alert('Sucesso!');
-    RootNavigation.resetTo("PetForm"); //Alterar para a home
+    RootNavigation.resetTo("Home");
   })
   .catch((error) => {
     let message;

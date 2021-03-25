@@ -23,20 +23,20 @@ export const SideMenu = (props) => {
                 </MenuCategory>
                 <MenuCategory
                     label='Atalhos'
-                    icon={{name: 'paw'}}
+                    leftIcon={{name: 'paw'}}
                     style={{backgroundColor: '#fee29b'}}
                     shrunken={shrunkenPaw}
                     onPress={() => setShrunkenPaw(prev => !prev)}
                 >
                     <MenuItem
                         label='Cadastrar um pet'
-                        onPress={() => navigation.navigate('PetForm')}
+                        onPress={() => navigation.navigate('RegisterPet')}
                         separator={false}
                     />
                 </MenuCategory>
                 <MenuCategory
                     label='Informações'
-                    icon={{name: 'info'}}
+                    leftIcon={{name: 'info'}}
                     style={{backgroundColor: '#cfe9e5'}}
                     shrunken={shrunkenInfo}
                     onPress={() => setShrunkenInfo(prev => !prev)}
@@ -54,7 +54,7 @@ export const SideMenu = (props) => {
                 </MenuCategory>
                 <MenuCategory
                     label='Configurações'
-                    icon={{name: 'gear'}}
+                    leftIcon={{name: 'gear'}}
                     expandable={false}
                 />
             </ContentContainer>

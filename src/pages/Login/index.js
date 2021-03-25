@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar, Keyboard } from 'react-native';
-import { Header, Container, Title, FormContainer } from './styles';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Container, FormContainer } from './styles';
 import FormTextInput from '../../atomic/molecules/FormTextInput';
 import CustomButton from '../../atomic/atoms/CustomButton';
 import { signIn } from '../../services/firebaseMethods';
 import { useNavigation } from '@react-navigation/native';
+import CustomHeader from '../../atomic/molecules/CustomHeader';
 
 
 export default function Register() {
@@ -54,10 +54,7 @@ export default function Register() {
                 backgroundColor={'#88c9bf'}
                 barStyle={'light-content'}
             />
-            <Header>
-                <Icon name={'bars'} color={'#434343'} size={24} style={{marginLeft: 16}} onPress={() => navigation.openDrawer()}/> 
-                <Title>Login</Title>
-            </Header>
+            <CustomHeader label='Login' leftIcon='menu' style={{backgroundColor: '#cfe9e5'}} />
             <FormContainer>
                 <FormTextInput
                     placeholder="E-mail"
