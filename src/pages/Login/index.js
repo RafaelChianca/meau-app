@@ -90,6 +90,20 @@ export default function Register() {
                     }}
                     onPress={handlePress}
                 />
+                <CustomButton
+                    label='Não possui conta? Cadastre-se aqui'
+                    style={{
+                        backgroundColor: 'transparent',
+                        width: '100%',
+                        height:40,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        marginTop: 20,
+                    }}
+                    labelStyle={{color: '#88c9bf'}}
+                    onPress={() => navigation.navigate('Register')}
+                />
             </FormContainer>
         </Container>
     );

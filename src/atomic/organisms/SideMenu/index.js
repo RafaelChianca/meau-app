@@ -62,7 +62,7 @@ export const SideMenu = (props) => {
                     expandable={false}
                 />
             </ContentContainer>
-            <LogoutButton label='Sair' />
+            <LogoutButton label='Sair' onPress={() => navigation.replace('Login')} />
         </Drawer>
     );
 }

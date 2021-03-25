@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Label } from './styles';
 
-export default function CustomButton({ label, ...rest }) {
+export default function CustomButton({ label, labelStyle, ...rest }) {
   return (
     <Button {...rest}>
-      <Label>{label}</Label>
+      <Label style={labelStyle}>{label}</Label>
     </Button>
   );
 }
