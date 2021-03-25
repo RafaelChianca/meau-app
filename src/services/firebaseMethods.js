@@ -3,6 +3,20 @@ import { Alert } from "react-native";
 import 'firebase/firestore';
 import * as RootNavigation from './RootNavigation';
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBDupsgo2xY9KCjHn4tfjrZHSdkQJrmQa4",
+  authDomain: "meau-app-dev.firebaseapp.com",
+  projectId: "meau-app-dev",
+  storageBucket: "meau-app-dev.appspot.com",
+  messagingSenderId: "149651925597",
+  appId: "1:149651925597:web:20749db1737d4f7ad77bb4",
+  measurementId: "G-V86PQKWBTL"
+}
+
+if (!firebase.apps.length || !firebase.length){
+  firebase.initializeApp(firebaseConfig)
+}
+
 export async function signIn(email, password) {
   await firebase
   .auth()
