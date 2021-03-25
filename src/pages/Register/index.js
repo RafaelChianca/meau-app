@@ -51,6 +51,7 @@ export default function Register() {
                     value={idade}
                     onChangeText={setIdade}
                     containerStyle={{marginTop: 28, marginLeft: 28, marginRight: 16}}
+                    keyboardType='numeric'
                 />
                 <FormTextInput
                     placeholder="E-mail"
