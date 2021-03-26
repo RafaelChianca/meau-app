@@ -4,7 +4,6 @@ import { Container, Info, Label } from './styles';
 import FormTextInput from '../../atomic/molecules/FormTextInput';
 import CustomButton from '../../atomic/atoms/CustomButton';
 import ImageSelector from '../../atomic/molecules/ImageSelector';
-import { useNavigation } from '@react-navigation/native';
 import CustomHeader from '../../atomic/molecules/CustomHeader';
 import {registerUser} from "../../services/firebaseMethods";
 
@@ -19,8 +18,6 @@ export default function Register() {
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmacao, setConfirmacao] = useState('');
-
-    const navigation = useNavigation();
 
     const handlePress = () => {
         if (!nome) {
@@ -55,8 +52,6 @@ export default function Register() {
             usuario,
             senha
           );
-        //   navigation.navigate('Login');
-        //   emptyState();
         }
       };
 
@@ -143,10 +138,6 @@ export default function Register() {
 
                 <Label>foto de perfil</Label>
                 <ImageSelector style={{width: 128, height: 128, alignSelf: 'center', borderRadius: 2, marginTop: 32}} />
-                {/* <Foto>
-                    <MaterialIcon name='control-point' color='#757575' size={24}/>
-                    <Text style={{fontSize: 14, color: '#757575'}}>adicionar foto</Text>
-                </Foto> */}
                 <CustomButton
                     label="FAZER CADASTRO"
                     style={{marginBottom: 24, backgroundColor: '#88c9bf', marginTop: 32}}

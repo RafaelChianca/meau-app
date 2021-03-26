@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 
 export default () => {
   return (
-    <Stack.Navigator initialRouteName="Register">
+    <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
         <Stack.Screen name="Register" component={Register} options={{headerShown: false}}/>  
         <Stack.Screen name="Ops" component={Ops} options={{headerShown: false}}/>

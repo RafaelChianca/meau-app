@@ -11,6 +11,11 @@ export const SideMenu = (props) => {
     const [shrunkenPaw, setShrunkenPaw] = useState(true);
     const [shrunkenInfo, setShrunkenInfo] = useState(true);
 
+    const logOut = () => {
+        navigation.replace('Login');
+        navigation.closeDrawer();
+    }
+
     return (
         <Drawer {...props}>
             <ContentContainer>
@@ -62,7 +67,7 @@ export const SideMenu = (props) => {
                     expandable={false}
                 />
             </ContentContainer>
-            <LogoutButton label='Sair' onPress={() => navigation.replace('Login')} />
+            <LogoutButton label='Sair' onPress={logOut} />
         </Drawer>
     );
 }

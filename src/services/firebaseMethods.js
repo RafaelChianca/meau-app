@@ -2,7 +2,7 @@ import * as firebase from 'firebase';
 import { Alert } from "react-native";
 import 'firebase/firestore';
 import * as RootNavigation from './RootNavigation';
-// import firestore from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBDupsgo2xY9KCjHn4tfjrZHSdkQJrmQa4",
@@ -21,35 +21,26 @@ if (!firebase.apps.length) {
 }
 
 export async function registerUser(name, age, email, state, city, phone, username, password) {
-  await firebase.auth().createUserWithEmailAndPassword(email, password)
-  .then(() => {
+  try {
+    await firebase.auth().createUserWithEmailAndPassword(email, password);
+    const currentUser = firebase.auth().currentUser;
+
+    const db = firebase.firestore();
+    db.collection("Users")
+      .doc(currentUser.uid)
+      .set({
+        email: currentUser.email,
+        name: name,
+        age: age,
+        state: state,
+        city: city,
+        phone: phone,
+        username: username
+      });
     RootNavigation.resetTo("Home");
-  })
-  .catch((error) => {
-    Alert.alert("Algo deu errado!", error.message);
-
-  });
-  // const currentUser = firebase.auth().currentUser;
-  
-  // const usersCollection = firestore().collection('users');
-  //   usersCollection
-  //   .doc(currentUser.uid)
-  //   .set({
-  //     nome: name,
-  //     idade: age,
-  //     email: currentUser.email,
-  //     estado: state,
-  //     cidade: city,
-  //     telefone: phone,
-  //     usuario: username,
-  //   })
-  //   .then(() => {
-  //     Alert.alert("Deu bom!");
-  //   })
-  //   .catch((error) => {
-  //     Alert.alert("Algo deu errado!", error.message);
-
-  //   }) 
+  } catch (err) {
+    Alert.alert("Algo deu errado!", err.message);
+  }
 }
 
 export async function signIn(email, password) {
