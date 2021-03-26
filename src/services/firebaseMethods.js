@@ -1,8 +1,6 @@
 import * as firebase from 'firebase';
 import { Alert } from "react-native";
-import 'firebase/firestore';
 import * as RootNavigation from './RootNavigation';
-import firestore from '@react-native-firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBDupsgo2xY9KCjHn4tfjrZHSdkQJrmQa4",
