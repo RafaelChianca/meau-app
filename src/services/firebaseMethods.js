@@ -14,13 +14,11 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-}else {
-  firebase.app(firebaseConfig);
 }
 
 export async function registerUser(name, age, email, state, city, phone, username, password) {
+  await firebase.auth().createUserWithEmailAndPassword(email, password);
   try {
-    await firebase.auth().createUserWithEmailAndPassword(email, password);
     const currentUser = firebase.auth().currentUser;
 
     const db = firebase.firestore();
