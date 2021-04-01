@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar, Keyboard } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container, FormContainer } from './styles';
 import FormTextInput from '../../atomic/molecules/FormTextInput';
 import CustomButton from '../../atomic/atoms/CustomButton';
-import { signIn } from '../../services/firebaseMethods';
 import { useNavigation } from '@react-navigation/native';
 import CustomHeader from '../../atomic/molecules/CustomHeader';
+import { loginRequested } from '../../store/actions/profile';
 
 
 export default function Register() {
+    
+    const loading = useSelector(state => state.profile.loading);
 
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState(null);
@@ -16,6 +19,7 @@ export default function Register() {
     const [passwordError, setPasswordError] = useState(null);
 
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         return () => {
@@ -44,7 +48,7 @@ export default function Register() {
 
         if (emailError || passwordError) return
     
-        await signIn(email, password);
+        dispatch(loginRequested(email, password))
     };
 
     return(
@@ -54,7 +58,7 @@ export default function Register() {
                 backgroundColor={'#88c9bf'}
                 barStyle={'light-content'}
             />
-            <CustomHeader label='Login' leftIcon='menu' style={{backgroundColor: '#cfe9e5'}} />
+            <CustomHeader label='Login' showLeftIcon={false} style={{backgroundColor: '#cfe9e5'}} />
             <FormContainer>
                 <FormTextInput
                     placeholder="E-mail"
@@ -103,6 +107,7 @@ export default function Register() {
                     }}
                     labelStyle={{color: '#88c9bf'}}
                     onPress={() => navigation.navigate('Register')}
+                    loading={loading}
                 />
             </FormContainer>
         </Container>

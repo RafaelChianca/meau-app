@@ -1,12 +1,19 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { Provider } from 'react-redux';
+import * as firebase from 'firebase';
 import AppStack from './src/routes/AppStack';
-import { navigationRef } from './src/services/RootNavigation';
+import { store } from './src/store';
+import firebaseConfig from './src/config/keys';
 
 export default function App() {
+  
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
   return (
-    <NavigationContainer ref={navigationRef} >
+    <Provider store={store}>
       <AppStack />
-    </NavigationContainer>
+    </Provider>
   );
 }

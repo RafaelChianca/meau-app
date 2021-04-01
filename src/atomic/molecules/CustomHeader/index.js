@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Container, StartContainer, MiddleContainer, EndContainer, Button, Label } from './styles';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
 
-export default function CustomHeader({ label, leftIcon = 'back', rightIcon, onPressRightIcon, iconColor = '#434343', ...rest }) {
+export default function CustomHeader({ label, showLeftIcon = true, leftIcon = 'back', rightIcon, onPressRightIcon, iconColor = '#434343', ...rest }) {
 
   const navigation = useNavigation();
   const navInfo = useNavigationState(state => state);
@@ -21,12 +21,18 @@ export default function CustomHeader({ label, leftIcon = 'back', rightIcon, onPr
   }
 
   const renderLeftIcon = () => {
-    if (leftIcon === 'back') {
-      if (navInfo.index !== 0) {
-        return <Icon name='arrow-left' color={iconColor} size={24}/>
-      } else return <></>
-    } else if (leftIcon === 'menu') {
-      return <Icon name='bars' color={iconColor} size={24}/>
+    switch (leftIcon) {
+      case 'back':
+        if (navInfo.index !== 0) {
+          return <Icon name='arrow-left' color={iconColor} size={24}/>
+        } else {
+          return <></>
+        }
+      case 'menu':
+        return <Icon name='bars' color={iconColor} size={24}/>
+        
+      default:
+        return <></>
     }
   }
 
@@ -48,11 +54,13 @@ export default function CustomHeader({ label, leftIcon = 'back', rightIcon, onPr
 
   return (
     <Container {...rest}>
-      <StartContainer>
-        <Button onPress={buttonPressed}>
-          {renderLeftIcon()}
-        </Button>
-      </StartContainer>
+      {showLeftIcon &&
+        <StartContainer>
+          <Button onPress={buttonPressed}>
+            {renderLeftIcon()}
+          </Button>
+        </StartContainer>
+      }
       <MiddleContainer>
         <Label numberOfLines={1} adjustsFontSizeToFit>{label}</Label>
       </MiddleContainer>

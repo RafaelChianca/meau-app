@@ -35,13 +35,13 @@ export const PetImage = styled.Image`
 export const InfoContainer = styled.View`
     width: 100%;
     background-color: white;
-    flex-direction: row;
+    flex-direction: column;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 12px;
     padding-right: 12px;
-    flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
 `;
 
 export const PetInfo = styled.Text`

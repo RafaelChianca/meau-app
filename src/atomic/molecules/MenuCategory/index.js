@@ -2,23 +2,36 @@ import React from 'react';
 import { Container, Header, BegginingContainer, IconContainer, ChildrenContainer, Label } from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function MenuCategory({ icon, label, children, containerStyle, expandable = true, shrunken = true, ...rest }) {
+export default function MenuCategory({ leftIcon, label, children, containerStyle, labelStyle, expandable = true, shrunken = true, ...rest }) {
+
+  const selectIconType = () => {
+    switch (leftIcon.name) {
+      case 'paw':
+        return 'paw'
+      case 'info':
+        return 'info'
+      case 'gear':
+        return 'gear'
+      default:
+        return 'circle'
+    }
+  } 
 
   return (
-    <Container style={{containerStyle}}>
+    <Container style={containerStyle}>
       <Header {...rest}>
         <BegginingContainer>
-          {icon && icon.name &&
+          {leftIcon &&
             <IconContainer>
               <Icon
-                name={icon.name}
-                color={icon.color ? icon.color : '#757575'}
+                name={selectIconType()}
+                color={leftIcon.color ? leftIcon.color : '#757575'}
                 size={24}
               />
             </IconContainer>
           }
           {label &&
-            <Label>{label}</Label>
+            <Label style={labelStyle}>{label}</Label>
           }
         </BegginingContainer>
         {expandable &&

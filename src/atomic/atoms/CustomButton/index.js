@@ -1,10 +1,14 @@
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 import { Button, Label } from './styles';
 
-export default function CustomButton({ label, labelStyle, ...rest }) {
+export default function CustomButton({ label, labelStyle, loading, ...rest }) {
   return (
     <Button {...rest}>
-      <Label style={labelStyle}>{label}</Label>
+      {loading
+        ? <ActivityIndicator size='small' color='white' />
+        : <Label style={labelStyle}>{label}</Label>
+      }
     </Button>
   );
 }

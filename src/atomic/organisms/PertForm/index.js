@@ -7,20 +7,35 @@ import FormRadio from '../../molecules/FormRadio';
 import FormSelect from '../../molecules/FormSelect';
 import { Container } from './styles';
 import ImageSelector from '../../molecules/ImageSelector';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerPetRequested } from '../../../store/actions/pet';
 
 export default function PertForm() {
 
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.profile.user)
+
     const [name, setName] = useState('');
-    const [species, setSpecies] = useState(0);
-    const [sex, setSex] = useState(0);
-    const [size, setSize] = useState(0);
-    const [age, setAge] = useState(0);
+    const [nameError, setNameError] = useState(null);
+    const [species, setSpecies] = useState(null);
+    const [speciesError, setSpeciesError] = useState(null);
+    const [sex, setSex] = useState(null);
+    const [sexError, setSexError] = useState(null);
+    const [size, setSize] = useState(null);
+    const [sizeError, setSizeError] = useState(null);
+    const [age, setAge] = useState(null);
+    const [ageError, setAgeError] = useState(null);
     const [temperment, setTemperment] = useState([]);
+    const [tempermentError, setTempermentError] = useState(null);
     const [health, setHealth] = useState([]);
-    const [diseases, setDiseases] = ('');
+    const [healthError, setHealthError] = useState(null);
+    const [diseases, setDiseases] = useState('');
+    const [diseasesError, setDiseasesError] = useState(null);
     const [conditions, setConditions] = useState([]);
+    const [conditionsError, setConditionsError] = useState(null);
     const [time, setTime] = useState([]);
     const [about, setAbout] = useState('');
+    const [aboutError, setAboutError] = useState(null);
 
     useEffect(() => {
         if (!conditions.includes(4)) {
@@ -40,6 +55,97 @@ export default function PertForm() {
         }
     }
 
+    const handleSubmit = () => {
+        let error = false;
+
+        if (name.length === 0) {
+            setNameError('Campo obrigatório.')
+            error = true;
+        } else {
+            setNameError(null)
+        }
+        if (!species) {
+            setSpeciesError('Campo obrigatório.')
+            error = true;
+        } else {
+            setSpeciesError(null)
+        }
+        if (!sex) {
+            setSexError('Campo obrigatório.')
+            error = true;
+        } else {
+            setSexError(null)
+        }
+        if (!size) {
+            setSizeError('Campo obrigatório.')
+            error = true;
+        } else {
+            setSizeError(null)
+        }
+        if (!age) {
+            setAgeError('Campo obrigatório.')
+            error = true;
+        } else {
+            setAgeError(null)
+        }
+        if (temperment.length === 0) {
+            setTempermentError('Selecione ao menos um.')
+            error = true;
+        } else {
+            setTempermentError(null)
+        }
+        if (health.length === 0) {
+            setHealthError('Selecione ao menos um.')
+            error = true;
+        } else {
+            setHealthError(null)
+        }
+        if (diseases.length === 0) {
+            setDiseasesError('Campo obrigatório.')
+            error = true;
+        } else {
+            setDiseasesError(null)
+        }
+        if (conditions.length === 0) {
+            setConditionsError('Selecione ao menos um.')
+            error = true;
+        } else if (conditions.includes('Acompanhamento pós adoção')) {
+            if (time.length === 0) {
+                setConditionsError('Selecione um tempo de acompanhamento.')
+                error = true;
+            } else {
+                setConditionsError(null)
+            }
+        } else {
+            setConditionsError(null)
+        }
+        if (about.length === 0) {
+            setAboutError('Campo obrigatório')
+            error = true;
+        } else {
+            setAboutError(null)
+        }
+
+        if (error) {
+            return
+        } else {
+            dispatch(registerPetRequested(
+                name,
+                species,
+                sex,
+                size,
+                age,
+                temperment,
+                health,
+                diseases,
+                conditions,
+                time,
+                about,
+                user.id
+            ))
+        }
+    }
+
     return (
         <Container>
             <FormTextInput
@@ -48,124 +154,125 @@ export default function PertForm() {
                 value={name}
                 onChangeText={setName}
                 containerStyle={{marginBottom: 20}}
+                error={nameError}
             />
             <ImageSelector label="Fotos do animal" style={{marginBottom: 20}} />
-            <FormRadio label="Espécie" style={{marginBottom: 20}}>
+            <FormRadio label="Espécie" style={{marginBottom: 20}} error={speciesError}>
                 <RadioButton
                     label="Cachorro"
-                    selected={species === 1}
-                    onPress={() => setSpecies(1)}
+                    selected={species === 'Cachorro'}
+                    onPress={() => setSpecies('Cachorro')}
                 />
                 <RadioButton
                     label="Gato"
-                    selected={species === 2}
-                    onPress={() => setSpecies(2)}
+                    selected={species === 'Gato'}
+                    onPress={() => setSpecies('Gato')}
                 />
             </FormRadio>
-            <FormRadio label="Sexo" style={{marginBottom: 20}}>
+            <FormRadio label="Sexo" style={{marginBottom: 20}} error={sexError}>
                 <RadioButton
                     label="Masculino"
-                    selected={sex === 1}
-                    onPress={() => setSex(1)}
+                    selected={sex === 'Masculino'}
+                    onPress={() => setSex('Masculino')}
                 />
                 <RadioButton
                     label="Feminino"
-                    selected={sex === 2}
-                    onPress={() => setSex(2)}
+                    selected={sex === 'Feminino'}
+                    onPress={() => setSex('Feminino')}
                 />
             </FormRadio>
-            <FormRadio label="Porte" style={{marginBottom: 20}}>
+            <FormRadio label="Porte" style={{marginBottom: 20}} error={sizeError}>
                 <RadioButton
                     label="Pequeno"
-                    selected={size === 1}
-                    onPress={() => setSize(1)}
+                    selected={size === 'Pequeno'}
+                    onPress={() => setSize('Pequeno')}
                 />
                 <RadioButton
                     label="Médio"
-                    selected={size === 2}
-                    onPress={() => setSize(2)}
+                    selected={size === 'Médio'}
+                    onPress={() => setSize('Médio')}
                 />
                 <RadioButton
                     label="Grande"
-                    selected={size === 3}
-                    onPress={() => setSize(3)}
+                    selected={size === 'Grande'}
+                    onPress={() => setSize('Grande')}
                 />
             </FormRadio>
-            <FormRadio label="Idade" style={{marginBottom: 20}}>
+            <FormRadio label="Idade" style={{marginBottom: 20}} error={ageError}>
                 <RadioButton
                     label="Filhote"
-                    selected={age === 1}
-                    onPress={() => setAge(1)}
+                    selected={age === 'Filhote'}
+                    onPress={() => setAge('Filhote')}
                 />
                 <RadioButton
                     label="Adulto"
-                    selected={age === 2}
-                    onPress={() => setAge(2)}
+                    selected={age === 'Adulto'}
+                    onPress={() => setAge('Adulto')}
                 />
                 <RadioButton
                     label="Idoso"
-                    selected={age === 3}
-                    onPress={() => setAge(3)}
+                    selected={age === 'Adulto'}
+                    onPress={() => setAge('Adulto')}
                 />
             </FormRadio>
-            <FormSelect label="Sexo" style={{marginBottom: 20}}>
+            <FormSelect label="Temperamento" style={{marginBottom: 20}} error={tempermentError}>
                 <SelectButton
                     label="Brincalhão"
-                    selected={temperment?.includes(1)}
-                    onPress={() => handleSelect(temperment, setTemperment, 1)}
+                    selected={temperment?.includes('Brincalhão')}
+                    onPress={() => handleSelect(temperment, setTemperment, 'Brincalhão')}
                     style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Tímido"
-                    selected={temperment?.includes(2)}
-                    onPress={() => handleSelect(temperment, setTemperment, 2)}
+                    selected={temperment?.includes('Tímido')}
+                    onPress={() => handleSelect(temperment, setTemperment, 'Tímido')}
                     style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Calmo"
-                    selected={temperment?.includes(3)}
-                    onPress={() => handleSelect(temperment, setTemperment, 3)}
+                    selected={temperment?.includes('Calmo')}
+                    onPress={() => handleSelect(temperment, setTemperment, 'Calmo')}
                     style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Guarda"
-                    selected={temperment?.includes(4)}
-                    onPress={() => handleSelect(temperment, setTemperment, 4)}
+                    selected={temperment?.includes('Guarda')}
+                    onPress={() => handleSelect(temperment, setTemperment, 'Guarda')}
                     style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Amoroso"
-                    selected={temperment?.includes(5)}
-                    onPress={() => handleSelect(temperment, setTemperment, 5)}
+                    selected={temperment?.includes('Amoroso')}
+                    onPress={() => handleSelect(temperment, setTemperment, 'Amoroso')}
                 />
                 <SelectButton
                     label="Preguiçoso"
-                    selected={temperment?.includes(6)}
-                    onPress={() => handleSelect(temperment, setTemperment, 6)}
+                    selected={temperment?.includes('Preguiçoso')}
+                    onPress={() => handleSelect(temperment, setTemperment, 'Preguiçoso')}
                 />
             </FormSelect>
-            <FormSelect label="Saúde" style={{marginBottom: 20}}>
+            <FormSelect label="Saúde" style={{marginBottom: 20}} error={healthError}>
                 <SelectButton
                     label="Vacinado"
-                    selected={health?.includes(1)}
-                    onPress={() => handleSelect(health, setHealth, 1)}
+                    selected={health?.includes('Vacinado')}
+                    onPress={() => handleSelect(health, setHealth, 'Vacinado')}
                     style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Vermifugado"
-                    selected={health?.includes(2)}
-                    onPress={() => handleSelect(health, setHealth, 2)}
+                    selected={health?.includes('Vermifugado')}
+                    onPress={() => handleSelect(health, setHealth, 'Vermifugado')}
                     style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Castrado"
-                    selected={health?.includes(3)}
-                    onPress={() => handleSelect(health, setHealth, 3)}
+                    selected={health?.includes('Castrado')}
+                    onPress={() => handleSelect(health, setHealth, 'Castrado')}
                 />
                 <SelectButton
                     label="Doente"
-                    selected={health?.includes(4)}
-                    onPress={() => handleSelect(health, setHealth, 4)}
+                    selected={health?.includes('Doente')}
+                    onPress={() => handleSelect(health, setHealth, 'Doente')}
                 />
             </FormSelect>
             <FormTextInput
@@ -173,53 +280,54 @@ export default function PertForm() {
                 value={diseases}
                 onChangeText={setDiseases}
                 containerStyle={{marginBottom: 20}}
+                error={diseasesError}
             />
-            <FormSelect label="Exigências para adoção">
+            <FormSelect label="Exigências para adoção" error={conditionsError}>
                 <SelectButton
                     label="Termo de adoção"
-                    selected={conditions?.includes(1)}
-                    onPress={() => handleSelect(conditions, setConditions, 1)}
+                    selected={conditions?.includes('Termo de adoção')}
+                    onPress={() => handleSelect(conditions, setConditions, 'Termo de adoção')}
                     style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Fotos da casa"
-                    selected={conditions?.includes(2)}
-                    onPress={() => handleSelect(conditions, setConditions, 2)}
+                    selected={conditions?.includes('Fotos da casa')}
+                    onPress={() => handleSelect(conditions, setConditions, 'Fotos da casa')}
                     style={{minWidth: '100%', marginBottom: 20}}
                 />
                 <SelectButton
                     label="Visita prévia ao animal"
-                    selected={conditions?.includes(3)}
-                    onPress={() => handleSelect(conditions, setConditions, 3)}
+                    selected={conditions?.includes('Visita prévia ao animal')}
+                    onPress={() => handleSelect(conditions, setConditions, 'Visita prévia ao animal')}
                     style={{marginBottom: 20}}
                 />
                 <SelectButton
                     label="Acompanhamento pós adoção"
-                    selected={conditions?.includes(4)}
-                    onPress={() => handleSelect(conditions, setConditions, 4)}
+                    selected={conditions?.includes('Acompanhamento pós adoção')}
+                    onPress={() => handleSelect(conditions, setConditions, 'Acompanhamento pós adoção')}
                     style={{marginBottom: 20, minWidth: '100%'}}
                 />
             </FormSelect>
             <FormSelect style={{marginLeft: 20, marginBottom: 20}}>
                 <SelectButton
                     label="1 mês"
-                    disabled={!conditions?.includes(4)}
-                    selected={time?.includes(1)}
-                    onPress={() => handleSelect(time, setTime, 1)}
+                    disabled={!conditions?.includes('Acompanhamento pós adoção')}
+                    selected={time?.includes('1 mês')}
+                    onPress={() => handleSelect(time, setTime, '1 mês')}
                     style={{minWidth: '100%', marginBottom: 20}}
                 />
                 <SelectButton
                     label="3 meses"
-                    disabled={!conditions?.includes(4)}
-                    selected={time?.includes(2)}
-                    onPress={() => handleSelect(time, setTime, 2)}
+                    disabled={!conditions?.includes('Acompanhamento pós adoção')}
+                    selected={time?.includes('3 meses')}
+                    onPress={() => handleSelect(time, setTime, '3 meses')}
                     style={{minWidth: '100%', marginBottom: 20}}
                 />
                 <SelectButton
                     label="6 meses"
-                    disabled={!conditions?.includes(4)}
-                    selected={time?.includes(3)}
-                    onPress={() => handleSelect(time, setTime, 3)}
+                    disabled={!conditions?.includes('Acompanhamento pós adoção')}
+                    selected={time?.includes('6 meses')}
+                    onPress={() => handleSelect(time, setTime, '6 meses')}
                     style={{minWidth: '100%'}}
                 />
             </FormSelect>
@@ -229,10 +337,12 @@ export default function PertForm() {
                 value={about}
                 onChangeText={setAbout}
                 containerStyle={{marginBottom: 24}}
+                error={aboutError}
             />
             <CustomButton
                 label="Colocar para adoção"
                 style={{marginBottom: 24}}
+                onPress={handleSubmit}
             />
         </Container>
     );

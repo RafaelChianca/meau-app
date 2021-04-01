@@ -1,13 +1,18 @@
 import React from 'react';
 import InputLabel from '../../atoms/InputLabel';
-import { Container, SelectContainer } from './styles';
+import { Container, SelectContainer, LabelContainer, ErrorText } from './styles';
 
-export default function FormSelect({ label, children, ...rest }) {
+export default function FormSelect({ label, children, error, ...rest }) {
 
   return (
     <Container {...rest}>
       {label &&
-        <InputLabel style={{marginBottom: 16}}>{label}</InputLabel>
+        <LabelContainer>
+          <InputLabel>{label}</InputLabel>
+          {error &&
+            <ErrorText>{error}</ErrorText>
+          }
+        </LabelContainer>
       }
       <SelectContainer>
         {children}

@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Container, HeaderContainer, PetName, PetImage, InfoContainer, PetInfo } from './styles';
 
-export default function AdoptOption({ pet, headerColor, icon, ...rest }) {
+export default function MyPetCard({ pet, headerColor, icon, ...rest }) {
 
   const navigation = useNavigation();
 
@@ -39,14 +39,8 @@ export default function AdoptOption({ pet, headerColor, icon, ...rest }) {
       </HeaderContainer>
       <PetImage source={{uri: pet.species === 'Cachorro' ? dogPicture : catPicture}} />
       <InfoContainer>
-        <PetInfo>{pet.sex}</PetInfo>
-        <PetInfo>{pet.age}</PetInfo>
-        <PetInfo>{pet.size}</PetInfo>
-        {pet.health?.map((item) => {
-          return (
-            <PetInfo>{item}</PetInfo>
-          )
-        })}
+        <PetInfo>x novos interessados</PetInfo>
+        <PetInfo>Adoção</PetInfo>
       </InfoContainer>
     </Container>
   );

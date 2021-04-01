@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView, StatusBar, Text } from 'react-native';
 import { Container, Info, Label } from './styles';
 import FormTextInput from '../../atomic/molecules/FormTextInput';
 import CustomButton from '../../atomic/atoms/CustomButton';
 import ImageSelector from '../../atomic/molecules/ImageSelector';
 import CustomHeader from '../../atomic/molecules/CustomHeader';
-import {registerUser} from "../../services/firebaseMethods";
+import { createUserRequested } from '../../store/actions/profile';
 
 export default function Register() {
+
+    const dispatch = useDispatch();
+
+    const loading = useSelector(state => state.profile.loading);
 
     const [nome, setNome] = useState('');
     const [idade, setIdade] = useState('');
@@ -42,16 +47,17 @@ export default function Register() {
         } else if (senha !== confirmacao) {
           Alert.alert('Senhas diferentes');
         } else {
-          registerUser(
-            nome,
-            idade,
-            email,
-            estado,
-            cidade,
-            telefone,
-            usuario,
-            senha
-          );
+          dispatch(
+            createUserRequested(
+              nome,
+              email,
+              usuario,
+              senha,
+              idade,
+              estado,
+              cidade,
+              telefone
+            ))
         }
       };
 
@@ -142,6 +148,7 @@ export default function Register() {
                     label="FAZER CADASTRO"
                     style={{marginBottom: 24, backgroundColor: '#88c9bf', marginTop: 32}}
                     onPress={handlePress}
+                    loading={loading}
                 />
             </ScrollView>
 

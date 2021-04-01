@@ -1,12 +1,17 @@
 import React from 'react';
 import InputLabel from '../../atoms/InputLabel';
-import { Container, RadioContainer } from './styles';
+import { Container, LabelContainer, ErrorText, RadioContainer } from './styles';
 
-export default function FormRadio({ label, children, ...rest }) {
+export default function FormRadio({ label, children, error, ...rest }) {
 
   return (
     <Container {...rest}>
-      <InputLabel style={{marginBottom: 16}}>{label}</InputLabel>
+      <LabelContainer>
+        <InputLabel>{label}</InputLabel>
+        {error &&
+          <ErrorText>{error}</ErrorText>
+        }
+      </LabelContainer>
       <RadioContainer>
         {children}
       </RadioContainer>

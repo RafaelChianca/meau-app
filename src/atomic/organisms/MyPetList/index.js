@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listPetsRequested } from '../../../store/actions/pet';
-import AdoptOption from '../../molecules/AdoptOption';
+import MyPetCard from '../../molecules/MyPetCard';
 import { Container } from './styles';
 
-export default function AdoptionList({ headerColor, icon, ...rest }) {
+export default function MyPetList({ headerColor, icon, ...rest }) {
     const petList = useSelector(state => state.pet.petList);
+    const user = useSelector(state => state.profile.user);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(listPetsRequested(1, 20));
+        dispatch(listPetsRequested(1, 20, user.id));
     }, [])
 
     return (
         <Container {...rest}>
-            {petList?.map((item) => {
+            {petList.filter(item => item.ownerID === user.id)?.map((item) => {
                 return (
-                    <AdoptOption headerColor={headerColor} icon={icon} pet={item} />
+                    <MyPetCard headerColor={headerColor} icon={icon} pet={item} />
                 )
             })}
         </Container>
