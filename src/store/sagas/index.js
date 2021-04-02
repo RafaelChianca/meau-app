@@ -7,7 +7,7 @@ import { petTypes, profileTypes } from '../actionTypes';
 import * as RootNavigation from '../../services/RootNavigation'
 
 function* createUser(action) {
-    const { name, email, username, password, age, state, city, phone } = action.payload
+    const { name, email, username, password, age, state, city, phone, image } = action.payload
 
     try{
         let fb = firebase.auth();
@@ -27,7 +27,8 @@ function* createUser(action) {
                 city: city,
                 phone: phone,
                 username: username,
-                id: currentUser.uid
+                id: currentUser.uid,
+                image: image
             });
         })
         .catch((error) => {
@@ -37,13 +38,13 @@ function* createUser(action) {
             } else if (error.code === 'auth/invalid-email') {
                 message = 'E-mail inválido'
             }
-            Alert.alert('Algo deu errado ao cadastrar usuário!', message);
+            Alert.alert('Algo deu errado ao cadastrar usuário! ', message);
         })
 
         
         yield put(ProfileActions.createUserSucceeded());
     }catch(error){
-        Alert.alert('Algo deu errado ao cadastrar usuário!', error.message);
+        Alert.alert('Algo deu errado ao cadastrar usuário! ', error.message);
         yield put(ProfileActions.createUserFailed());
     }
 }

@@ -7,6 +7,7 @@ import CustomButton from '../../atomic/atoms/CustomButton';
 import ImageSelector from '../../atomic/molecules/ImageSelector';
 import CustomHeader from '../../atomic/molecules/CustomHeader';
 import { createUserRequested } from '../../store/actions/profile';
+import * as ImagePicker from '../../services/imageRelated';
 
 export default function Register() {
 
@@ -23,6 +24,11 @@ export default function Register() {
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmacao, setConfirmacao] = useState('');
+    const [imagem, setImagem] = useState('');
+
+    const pickImage = async () => {
+        setImagem(await ImagePicker.pickImage());
+    }
 
     const handlePress = () => {
         if (!nome) {
@@ -56,7 +62,8 @@ export default function Register() {
               idade,
               estado,
               cidade,
-              telefone
+              telefone,
+              imagem
             ))
         }
       };
@@ -143,7 +150,10 @@ export default function Register() {
                 />
 
                 <Label>foto de perfil</Label>
-                <ImageSelector style={{width: 128, height: 128, alignSelf: 'center', borderRadius: 2, marginTop: 32}} />
+                <ImageSelector
+                    style={{width: 128, height: 128, alignSelf: 'center', borderRadius: 2, marginTop: 32}} 
+                    onPress={pickImage}
+                />
                 <CustomButton
                     label="FAZER CADASTRO"
                     style={{marginBottom: 24, backgroundColor: '#88c9bf', marginTop: 32}}

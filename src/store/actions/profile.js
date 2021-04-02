@@ -1,8 +1,8 @@
 import { profileTypes } from "../actionTypes"
 
-export const createUserRequested = ( name, email, username, password, age, state, city, phone ) => ({
+export const createUserRequested = ( name, email, username, password, age, state, city, phone, image ) => ({
     type: profileTypes.CREATE_REQUESTED,
-    payload: { name, email, username, password, age, state, city, phone }
+    payload: { name, email, username, password, age, state, city, phone, image }
 })
 export const createUserSucceeded = () => ({
     type: profileTypes.CREATE_SUCCEEDED,
