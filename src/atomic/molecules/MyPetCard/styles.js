@@ -33,7 +33,7 @@ export const PetImage = styled.Image`
 `;
 
 export const InfoContainer = styled.View`
-    width: 100%;
+    flex: 1;
     background-color: white;
     flex-direction: column;
     padding-top: 5px;

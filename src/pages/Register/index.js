@@ -66,7 +66,7 @@ export default function Register() {
               imagem
             ))
         }
-      };
+    };
 
     return(
         <Container>
