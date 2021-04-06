@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import EntIcon from 'react-native-vector-icons/Entypo';
 import { Container, StartContainer, MiddleContainer, EndContainer, Button, Label } from './styles';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
 
@@ -40,6 +41,8 @@ export default function CustomHeader({ label, showLeftIcon = true, leftIcon = 'b
     switch (rightIcon) {
       case 'search':
         return <Icon name='search' color={iconColor} size={24}/>
+      case 'share':
+        return <EntIcon name="share" color="#434343" size={24}/>
     
       default:
         return <></>

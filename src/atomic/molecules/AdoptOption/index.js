@@ -9,7 +9,7 @@ export default function AdoptOption({ pet, headerColor, icon, ...rest }) {
   const navigation = useNavigation();
 
   const openPet = () => {
-    navigation.navigate('Pet', {id: pet.id});
+    navigation.navigate('PetsDetails', {pet: pet});
   }
 
   const addFavorite = () => {
@@ -22,7 +22,7 @@ export default function AdoptOption({ pet, headerColor, icon, ...rest }) {
         return 'info-circle'
     
       default:
-        return 'heart'
+        return 'heart-o'
     }
   }
 
