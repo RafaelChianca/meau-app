@@ -28,7 +28,8 @@ function* createUser(action) {
                 phone: phone,
                 username: username,
                 id: currentUser.uid,
-                image: image
+                image: image,
+                favorites: [],
             });
         })
         .catch((error) => {
@@ -146,7 +147,9 @@ function* registerPet(action) {
             time: time,
             about: about,
             ownerID: ownerID,
-            active: true
+            active: true,
+            interestedUsers: 0,
+            location: ''
         });
 
         yield put(PetActions.registerPetSucceeded());
