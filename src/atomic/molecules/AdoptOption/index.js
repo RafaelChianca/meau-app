@@ -9,7 +9,7 @@ export default function AdoptOption({ pet, headerColor, icon, ...rest }) {
   const navigation = useNavigation();
 
   const openPet = () => {
-    navigation.navigate('PetsDetails', {pet: pet});
+    navigation.navigate('PetDetails', {pet: pet});
   }
 
   const addFavorite = () => {
