@@ -5,7 +5,8 @@ import AdoptOption from '../../molecules/AdoptOption';
 import { Container } from './styles';
 
 export default function AdoptionList({ headerColor, icon, ...rest }) {
-    const petList = useSelector(state => state.pet.petList);
+    const { petList } = useSelector(state => state.pet);
+    const { user } = useSelector(state => state.profile);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -14,7 +15,7 @@ export default function AdoptionList({ headerColor, icon, ...rest }) {
 
     return (
         <Container {...rest}>
-            {petList?.map((item) => {
+            {petList.filter(item => item.ownerID !== user.id)?.map((item) => {
                 return (
                     <AdoptOption headerColor={headerColor} icon={icon} pet={item} />
                 )
