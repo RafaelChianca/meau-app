@@ -35,6 +35,18 @@ export const loadPetFailed = () =>({
     type: petTypes.LOAD_FAILED
 })
 
+export const adoptPetRequested = (petID, ownerID) => ({
+    type: petTypes.ADOPT_REQUESTED,
+    payload: { petID, ownerID }
+})
+export const adoptPetSucceeded = (pet) => ({
+    type: petTypes.ADOPT_SUCCEEDED,
+    payload: { pet }
+})
+export const adoptPetFailed = () =>({
+    type: petTypes.ADOPT_FAILED
+})
+
 export const clearPets = () => ({
     type: petTypes.CLEAR
 })

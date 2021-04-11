@@ -28,6 +28,12 @@ function pet (state = INITIAL_STATE, action) {
             return {...state, error: false, loading: false, pet: action.payload.pet }
         case petTypes.LOAD_FAILED:
             return {...state, error: true, loading: false }
+        case petTypes.ADOPT_REQUESTED:
+            return {...state, loading: true }
+        case petTypes.ADOPT_SUCCEEDED:
+            return {...state, error: false, loading: false }
+        case petTypes.ADOPT_FAILED:
+            return {...state, error: true, loading: false }
         case petTypes.CLEAR:
             return INITIAL_STATE
         default:

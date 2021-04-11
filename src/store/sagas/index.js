@@ -149,7 +149,8 @@ function* registerPet(action) {
             ownerID: ownerID,
             active: true,
             interestedUsers: 0,
-            location: ''
+            location: '',
+            id: `${ownerID}-${Math.random()}`
         });
 
         yield put(PetActions.registerPetSucceeded());
@@ -162,16 +163,17 @@ function* registerPet(action) {
 }
 
 function* listPets(action) {
-    const { page, limit, userID } = action.payload;
+    // const { page, limit, userID } = action.payload;
 
     try{
   
         let petsRef = firebase.firestore().collection('Pets');
 
         const snapShot = yield call([
-         petsRef.where('active', '==', true),
+        petsRef.where('active', '==', true),
             petsRef.get,
         ]);  
+        // QUERY WITH OWNERID
         // if (userID !== undefined) {
         //     snapShot = yield call([
         //         petsRef.where('ownerID', '==', userID),
@@ -180,18 +182,46 @@ function* listPets(action) {
         // } else {
         // }
 
-      let petList = [];
-  
-      snapShot.forEach(document => {
-        petList.push(document.data());
-      });
+        let petList = [];
+    
+        snapShot.forEach(document => {
+            petList.push(document.data());
+        });
 
-      yield put(PetActions.listPetsSucceeded(petList));
+        yield put(PetActions.listPetsSucceeded(petList));
   
-      }catch(error){
+    }catch(error){
         Alert.alert("Falha ao buscar pets!", error.message)
         yield put(PetActions.listPetsFailed());
-      }
+    }
+}
+
+function* adoptPet(action) {
+    const { petID, ownerID } = action.payload;
+
+    try{
+        if (!ownerID) {
+            throw new Error('Usuário não encontrado')
+        }
+        if (!petID) {
+            throw new Error('Animal não encontrado')
+        }
+        const petRef = firebase.firestore().collection("Pets");
+        petRef
+        .doc(petID)
+        .update({
+            ownerID: ownerID
+        });
+
+        yield put(PetActions.listPetsSucceeded([]));
+        yield put(PetActions.listPetsRequested());
+        yield put(PetActions.adoptPetSucceeded());
+        Alert.alert("Pet adotado com sucesso!")
+        RootNavigation.pop()
+    }catch(error){
+        Alert.alert("Falha ao adotar pet!", error.message)
+        yield put(PetActions.adoptPetFailed());
+    }
 }
 
 function* mySaga() {
@@ -202,6 +232,7 @@ function* mySaga() {
         takeLatest(profileTypes.LOGOUT_REQUESTED, logout),
         takeLatest(petTypes.REGISTER_REQUESTED, registerPet),
         takeLatest(petTypes.LIST_REQUESTED, listPets),
+        takeLatest(petTypes.ADOPT_REQUESTED, adoptPet),
     ]);
 }
 

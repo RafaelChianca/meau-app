@@ -3,7 +3,7 @@ import { profileTypes } from "../actionTypes"
 const INITIAL_STATE = {
     error: false,
     loading: false,
-    user: [],
+    user: {},
 }
 // rDpa9wiM6cPx6knxHUhfGRVzqG23
 function profile (state = INITIAL_STATE, action) {
