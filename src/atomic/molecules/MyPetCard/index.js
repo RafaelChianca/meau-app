@@ -9,7 +9,7 @@ export default function MyPetCard({ pet, headerColor, icon, ...rest }) {
   const navigation = useNavigation();
 
   const openPet = () => {
-    navigation.navigate('PetDetails', {pet: pet});
+    navigation.navigate('PetDetails', {pet: pet, mainColor: headerColor});
   }
 
   const addFavorite = () => {
