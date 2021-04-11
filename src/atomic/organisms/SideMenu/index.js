@@ -14,20 +14,9 @@ export const SideMenu = (props) => {
 
     const dispatch = useDispatch();
 
-    const [displayName, setDisplayName] = useState('Efetue o login');
     const [shrunkenPaw, setShrunkenPaw] = useState(true);
     const [shrunkenInfo, setShrunkenInfo] = useState(true);
     const [shrunkenProfile, setShrunkenProfile] = useState(true);
-
-    useEffect(() => {
-        if (user && user.name && user.name.length > 0) {
-            setDisplayName(user.name)
-        } else if (user && user.email) {
-            setDisplayName(user.email)
-        } else {
-            setDisplayName('Efetue o login')
-        }
-    })
 
     const logOut = () => {
         dispatch(logOutRequested());
@@ -38,7 +27,10 @@ export const SideMenu = (props) => {
             <ContentContainer>
                 <MenuHeader />
                 <MenuCategory
-                    label={displayName}
+                    label={(user && Object.keys(user).length > 0)
+                        ? user.name ? user.name : ''
+                        : 'Efetue o login'
+                    }
                     style={{backgroundColor: '#88c9bf'}}
                     labelStyle={{textTransform: 'none'}}
                     expandable={user && Object.keys(user).length > 0}

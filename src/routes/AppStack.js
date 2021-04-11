@@ -16,12 +16,18 @@ export default function AppStack() {
   
   // Handle user state changes
   function onAuthStateChanged(user) {
-    console.log("USUARIO NO ROUTES ------", user)
     if (user && Object.keys(user).length > 0) {
-      dispatch(loadUserRequested(user.email));
-    } else {
-      dispatch(logOutRequested())
+      if (userReducer && userReducer.email) {
+        if (user.email.toLowerCase() !== userReducer.email.toLowerCase()) {
+          dispatch(loadUserRequested(user.email));
+        }
+      } else {
+        dispatch(loadUserRequested(user.email));
+      }
     }
+    // else {
+    //   dispatch(logOutRequested())
+    // }
   }
 
   useEffect(() => {
