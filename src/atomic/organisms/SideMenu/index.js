@@ -10,13 +10,18 @@ export const SideMenu = (props) => {
 
     const { navigation } = props;
 
-    const user = useSelector(state => state.profile.user);
+    const { user } = useSelector(state => state.profile);
 
     const dispatch = useDispatch();
 
+    const [loggedUser, setLoggedUser] = useState(null);
     const [shrunkenPaw, setShrunkenPaw] = useState(true);
     const [shrunkenInfo, setShrunkenInfo] = useState(true);
-    const [shrunkenProfile, setShrunkenProfile] = useState(true);
+    const [shrunkenProfile, setShrunkenProfile] = useState(true)
+
+    useEffect(() => {
+        setLoggedUser(user);
+    }, [user])
 
     const logOut = () => {
         dispatch(logOutRequested());
@@ -25,10 +30,10 @@ export const SideMenu = (props) => {
     return (
         <Drawer {...props}>
             <ContentContainer>
-                <MenuHeader />
+                <MenuHeader url={loggedUser && loggedUser.imageURL ? loggedUser.imageURL : null} />
                 <MenuCategory
-                    label={(user && Object.keys(user).length > 0)
-                        ? user.name ? user.name : ''
+                    label={(loggedUser && Object.keys(loggedUser).length > 0)
+                        ? loggedUser.name ? loggedUser.name : ''
                         : 'Efetue o login'
                     }
                     style={{backgroundColor: '#88c9bf'}}

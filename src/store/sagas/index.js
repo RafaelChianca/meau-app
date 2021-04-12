@@ -16,8 +16,8 @@ function* createUser(action) {
                 email,
                 password,
             );
-
-        const newUser = {
+        
+        let newUser = {
             email: email,
             name: name,
             age: age,
@@ -26,8 +26,22 @@ function* createUser(action) {
             phone: phone,
             username: username,
             id: login.user.uid,
-            image: image,
             favorites: [],
+            imageURL: ''
+        }
+        
+        if (image) {
+            const storage = firebase.storage();
+
+            const response = yield fetch(image.uri);
+            const blob = yield response.blob();
+
+            yield storage.ref(`/imagens/${login.user.uid}`).put(blob)
+            // yield storage.ref(`/imagens/${login.user.uid}`).putString(image.base64, 'base64')
+            
+            yield storage.ref('imagens').child(login.user.uid).getDownloadURL().then((url) => {
+                newUser.imageURL = url;
+            })
         }
 
         yield firebase
@@ -35,6 +49,7 @@ function* createUser(action) {
             .collection('Users')
             .doc(login.user.uid)
             .set(newUser);
+
         
         yield put(ProfileActions.createUserSucceeded(newUser));
     }catch(error){
@@ -128,13 +143,10 @@ function* logout(action) {
 }
 
 function* registerPet(action) {
-    const { name, species, sex, size, age, temperment, health, diseases, conditions, time, about, ownerID } = action.payload
+    const { name, species, sex, size, age, temperment, health, diseases, conditions, time, about, ownerID, image } = action.payload
     console.log("payload de cadastro pet", action.payload)
     try{
-        const db = firebase.firestore().collection("Pets");
-        db
-        .doc(`${ownerID}-${Math.random()}`)
-        .set({
+        let newPet = {
             name: name,
             species: species,
             sex: sex,
@@ -150,8 +162,26 @@ function* registerPet(action) {
             active: true,
             interestedUsers: 0,
             location: '',
-            id: `${ownerID}-${Math.random()}`
-        });
+            id: `${ownerID}-${Math.random()}`,
+            imageURL: ''
+        }
+
+        if (image) {
+            const storage = firebase.storage();
+
+            const response = yield fetch(image.uri);
+            const blob = yield response.blob();
+
+            yield storage.ref(`/imagens/${newPet.id}`).put(blob)
+            
+            yield storage.ref('imagens').child(newPet.id).getDownloadURL().then((url) => {
+                newPet.imageURL = url;
+            })
+        }
+
+        yield firebase.firestore()
+        .collection("Pets")
+        .add(newPet);
 
         yield put(PetActions.registerPetSucceeded());
         RootNavigation.resetTo('Home');

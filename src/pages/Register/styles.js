@@ -16,14 +16,14 @@ export const Title = styled.Text`
 `;
 
 export const Info = styled.View`
-    display: flex;
     width: 328px;
-    height: 80px;
+    min-height: 80px;
     background-color: #cfe9e5;
     border-radius: 4px;
-    margin-top: 16px;
     justify-content: center;
+    align-items: center;
     align-self: center;
+    padding: 10px;
 
 `;
 
@@ -35,15 +35,34 @@ export const Label = styled.Text`
     margin-left: 28px;
 `;
 
-export const Foto = styled.View`
-    display: flex;
-    width: 128px;
+export const PictureContainer = styled.View`
     height: 128px;
-    background-color: #e6e7e7;
-    border-radius: 2px;
+    width: 100%;
     margin-top: 32px;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    flex-direction: row;
+`;
+
+export const ProfilePicture = styled.Image`
+    height: 128px;
+    width: 128px;
+    background-color: black;
     justify-content: center;
     align-self: center;
     align-items: center;
 `;
 
+export const CancelButton = styled.TouchableOpacity`
+    height: 30px;
+    width: 30px;
+    background-color: red;
+    z-index: 100;
+    border-radius: 500px;
+    align-self: flex-start;
+    margin-left: -15px;
+    margin-top: -15px;
+    align-items: center;
+    justify-content: center;
+`;

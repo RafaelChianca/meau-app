@@ -1,8 +1,8 @@
 import { petTypes } from "../actionTypes"
 
-export const registerPetRequested = ( name, species, sex, size, age, temperment, health, diseases, conditions, time, about, ownerID ) => ({
+export const registerPetRequested = ( name, species, sex, size, age, temperment, health, diseases, conditions, time, about, ownerID, image ) => ({
     type: petTypes.REGISTER_REQUESTED,
-    payload: { name, species, sex, size, age, temperment, health, diseases, conditions, time, about, ownerID }
+    payload: { name, species, sex, size, age, temperment, health, diseases, conditions, time, about, ownerID, image }
 })
 export const registerPetSucceeded = () => ({
     type: petTypes.REGISTER_SUCCEEDED,

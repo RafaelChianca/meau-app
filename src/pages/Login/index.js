@@ -66,7 +66,7 @@ export default function Register() {
                     value={email}
                     error={emailError}
                     keyboardType="email-address"
-                    onChangeText={(email) => setEmail(email)}
+                    onChangeText={(email) => setEmail(email.trim())}
                     containerStyle={{marginTop: 64, color:'#434343'}}
                 />
                 <FormTextInput
