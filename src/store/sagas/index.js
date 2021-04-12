@@ -10,42 +10,42 @@ function* createUser(action) {
     const { name, email, username, password, age, state, city, phone, image } = action.payload
 
     try{
-        let fb = firebase.auth();
+        const login = yield firebase
+            .auth()
+            .createUserWithEmailAndPassword(
+                email,
+                password,
+            );
 
-        fb.createUserWithEmailAndPassword(email, password)
-        .then(() => {
-            const currentUser = fb.currentUser;
-    
-            const db = firebase.firestore();
-            db.collection("Users")
-            .doc(currentUser.uid)
-            .set({
-                email: currentUser.email,
-                name: name,
-                age: age,
-                state: state,
-                city: city,
-                phone: phone,
-                username: username,
-                id: currentUser.uid,
-                image: image,
-                favorites: [],
-            });
-        })
-        .catch((error) => {
-            let message = error.message;
-            if (error.code === 'auth/email-already-in-use') {
-                message = 'Este email já está sendo utilizado por outra conta.'
-            } else if (error.code === 'auth/invalid-email') {
-                message = 'E-mail inválido'
-            }
-            Alert.alert('Algo deu errado ao cadastrar usuário! ', message);
-        })
+        const newUser = {
+            email: email,
+            name: name,
+            age: age,
+            state: state,
+            city: city,
+            phone: phone,
+            username: username,
+            id: login.user.uid,
+            image: image,
+            favorites: [],
+        }
 
+        yield firebase
+            .firestore()
+            .collection('Users')
+            .doc(login.user.uid)
+            .set(newUser);
         
-        yield put(ProfileActions.createUserSucceeded());
+        yield put(ProfileActions.createUserSucceeded(newUser));
     }catch(error){
-        Alert.alert('Algo deu errado ao cadastrar usuário! ', error.message);
+        let message = error.message;
+        if (error.code === 'auth/email-already-in-use') {
+            message = 'Este email já está sendo utilizado por outra conta.'
+        } else if (error.code === 'auth/invalid-email') {
+            message = 'E-mail inválido'
+        }
+
+        Alert.alert('Algo deu errado ao cadastrar usuário! ', message);
         yield put(ProfileActions.createUserFailed());
     }
 }

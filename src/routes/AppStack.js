@@ -5,7 +5,7 @@ import * as firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import LeftDrawer from './LeftDrawer';
 import { navigationRef } from '../services/RootNavigation';
-import { loadUserRequested, logOutRequested } from '../store/actions/profile';
+import { loadUserRequested } from '../store/actions/profile';
 
 const Stack = createStackNavigator();
 
@@ -25,9 +25,6 @@ export default function AppStack() {
         dispatch(loadUserRequested(user.email));
       }
     }
-    // else {
-    //   dispatch(logOutRequested())
-    // }
   }
 
   useEffect(() => {

@@ -4,8 +4,9 @@ export const createUserRequested = ( name, email, username, password, age, state
     type: profileTypes.CREATE_REQUESTED,
     payload: { name, email, username, password, age, state, city, phone, image }
 })
-export const createUserSucceeded = () => ({
+export const createUserSucceeded = (user) => ({
     type: profileTypes.CREATE_SUCCEEDED,
+    payload: { user }
 })
 export const createUserFailed = () =>({
     type: profileTypes.CREATE_FAILED

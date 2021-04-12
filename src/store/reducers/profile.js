@@ -10,6 +10,12 @@ function profile (state = INITIAL_STATE, action) {
 
     switch(action.type){
 
+        case profileTypes.CREATE_REQUESTED:
+            return {...state, loading: true }
+        case profileTypes.CREATE_SUCCEEDED:
+            return {...state, error: false, loading: false, user: action.payload.user }
+        case profileTypes.CREATE_FAILED:
+            return {...state, error: true, loading: false }
         case profileTypes.LOGIN_REQUESTED:
             return {...state, loading: true }
         case profileTypes.LOGIN_SUCCEEDED:

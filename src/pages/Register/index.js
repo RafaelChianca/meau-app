@@ -15,15 +15,15 @@ export default function Register() {
 
     const loading = useSelector(state => state.profile.loading);
 
-    const [nome, setNome] = useState('');
-    const [idade, setIdade] = useState('');
-    const [email, setEmail] = useState(''); 
-    const [estado, setEstado] = useState('');
-    const [cidade, setCidade] = useState('');
-    const [telefone, setTelefone] = useState('');
-    const [usuario, setUsuario] = useState('');
-    const [senha, setSenha] = useState('');
-    const [confirmacao, setConfirmacao] = useState('');
+    const [nome, setNome] = useState('teste refactor');
+    const [idade, setIdade] = useState('23');
+    const [email, setEmail] = useState('teste@gmail.com'); 
+    const [estado, setEstado] = useState('df');
+    const [cidade, setCidade] = useState('bsb');
+    const [telefone, setTelefone] = useState('6166666');
+    const [usuario, setUsuario] = useState('testetttt');
+    const [senha, setSenha] = useState('123123');
+    const [confirmacao, setConfirmacao] = useState('123123');
     const [imagem, setImagem] = useState('');
 
     const pickImage = async () => {
@@ -103,7 +103,7 @@ export default function Register() {
                 <FormTextInput
                     placeholder="E-mail"
                     value={email}
-                    onChangeText={setEmail}
+                    onChangeText={text => setEmail(text.trim())}
                     containerStyle={{marginTop: 28, marginLeft: 28, marginRight: 16}}
                 />
                 <FormTextInput
