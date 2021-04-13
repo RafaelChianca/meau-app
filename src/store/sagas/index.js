@@ -50,7 +50,7 @@ function* createUser(action) {
             .doc(login.user.uid)
             .set(newUser);
 
-        
+        Alert.alert('Cadastro realizado com sucesso!');
         yield put(ProfileActions.createUserSucceeded(newUser));
     }catch(error){
         let message = error.message;
@@ -134,7 +134,7 @@ function* logout(action) {
 
         RootNavigation.resetTo("Login");
         RootNavigation.closeDrawer();
-        RootNavigation.drawer
+        yield put(ProfileActions.clearProfile());
         yield put(ProfileActions.logOutSucceeded());
     }catch(error){
         Alert.alert('Algo deu errado ao realizar logout!', error.message);

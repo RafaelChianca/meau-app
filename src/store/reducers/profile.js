@@ -5,7 +5,7 @@ const INITIAL_STATE = {
     loading: false,
     user: {},
 }
-// rDpa9wiM6cPx6knxHUhfGRVzqG23
+
 function profile (state = INITIAL_STATE, action) {
 
     switch(action.type){
