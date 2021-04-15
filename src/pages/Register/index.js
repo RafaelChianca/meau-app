@@ -70,13 +70,10 @@ export default function Register() {
         switch (status) {
           case 'denied':
             alertGoToGalleryConfig()
-            console.log(
-              'The permission has not been requested / is denied but requestable',
-            );
+
             break;
           case 'granted':
             chooseFromGallery();
-            if (__DEV__) console.log('DEU PERMISSAO');
             break;
         }
     }
@@ -87,13 +84,9 @@ export default function Register() {
         switch (status) {
           case 'denied':
             alertGoToCameraConfig()
-            console.log(
-              'The permission has not been requested / is denied but requestable',
-            );
             break;
           case 'granted':
             takePicture();
-            if (__DEV__) console.log('DEU PERMISSAO');
             break;
         }
     }

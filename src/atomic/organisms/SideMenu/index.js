@@ -49,6 +49,16 @@ export const SideMenu = (props) => {
                     }}
                 >
                     <MenuItem
+                        label='Home'
+                        separator={true}
+                        onPress={() => navigation.navigate('Home')}
+                    />
+                    <MenuItem
+                        label='Notificações'
+                        separator={true}
+                        onPress={() => navigation.navigate('Notification')}
+                    />
+                    <MenuItem
                         label='Meus pets'
                         separator={false}
                         onPress={() => navigation.navigate('MyPets')}

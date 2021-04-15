@@ -44,3 +44,21 @@ export const EndContainer = styled.View`
     align-items: flex-end;
 `;
 
+export const NotificationContainer = styled.View`
+    height: 15px;
+    width: 15px;
+    border-radius: 15px;
+    background-color: red;
+    position: absolute;
+    right: 25px;
+    top: 10px;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const NotificationNumber = styled.Text`
+    font-size: 10px;
+    color: white;
+    font-weight: bold;
+`;

@@ -37,7 +37,15 @@ export default function AdoptOption({ pet, headerColor, icon, ...rest }) {
           <Icon name={selectIconType()} color={'#434343'} size={24}/>
         </TouchableOpacity>
       </HeaderContainer>
-      <PetImage source={{uri: pet.species === 'Cachorro' ? dogPicture : catPicture}} />
+      <PetImage
+        source={{
+          uri: pet && pet.imageURL
+            ? pet.imageURL
+            : pet.species === 'Cachorro'
+              ? dogPicture
+              : catPicture
+        }}
+      />
       <InfoContainer>
         <PetInfo>{pet.sex}</PetInfo>
         <PetInfo>{pet.age}</PetInfo>

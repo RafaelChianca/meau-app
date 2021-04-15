@@ -142,10 +142,109 @@ function* logout(action) {
     }
 }
 
+function* loadNotifications(action) {
+    const { userID } = action.payload;
+    
+    try{
+
+        if (!userID) {
+            throw new Error('Falha ao carregar notificações')
+        }
+
+        let notificationRef = firebase.firestore().collection('Notif');
+
+        const snapShot = yield call([
+            notificationRef.where('targetID', '==', userID).orderBy('timestamp', 'desc'),
+            notificationRef.get,
+        ]);
+
+        let notifications = [];
+        
+        snapShot.forEach(document => {
+            notifications.push(document.data());
+        });
+
+        
+        yield put(ProfileActions.loadNotificationsSucceeded(notifications));
+    }catch(error){
+        Alert.alert('Ops!', error.message);
+        yield put(ProfileActions.loadNotificationsFailed());
+    }
+}
+
+function* clearNotifications(action) {
+    const { notificationIDs, userID } = action.payload;
+    
+    try{
+
+        if (!notificationIDs) {
+            throw new Error('Erro ao limpar notificações')
+        }
+
+        const db = firebase.firestore();
+        
+        const writeBatch = db.batch();
+
+        let notificationRef;
+
+        notificationIDs.forEach(element => {
+            notificationRef = db.collection("Notif").doc(element);
+            writeBatch.delete(notificationRef);
+        });
+
+        writeBatch.commit();
+
+        // IMPLEMENTAR CLEAR NOTIFICATIONS
+        // pegar id do user logado pelo firebase para apagar as dele ou 
+        // apagar todas notificações que tem os ids que chegam no payload
+
+        // RECARREGAR LISTA DE NOTIFICAÇÕES
+        yield put(ProfileActions.clearNotificationsSucceeded());
+    }catch(error){
+        Alert.alert('Ops!', error.message);
+        yield put(ProfileActions.clearNotificationsFailed());
+    }
+}
+
+function* sendTextNotification(action) {
+    const { targetID, body } = action.payload;
+    
+    try{
+
+        if (targetID && body) {
+            const timestamp = Math.floor(Date.now() / 1000);
+
+            const notification = {
+                acceptable: false,
+                body: body,
+                targetID: targetID,
+                timestamp: timestamp,
+                id: timestamp.toString()
+            }
+
+            yield firebase.firestore()
+            .collection("Notif")
+            .doc(timestamp.toString())
+            .set(notification);
+
+        } else {
+            throw new Error('Erro ao enviar notificação');
+        }
+
+        yield put(ProfileActions.sendTextNotificationSucceeded());
+    }catch(error){
+        Alert.alert('Ops!', error.message);
+        yield put(ProfileActions.sendTextNotificationFailed());
+    }
+}
+
+// PET FUNCTIONS --------------------------------------------------------------
+
 function* registerPet(action) {
     const { name, species, sex, size, age, temperment, health, diseases, conditions, time, about, ownerID, image } = action.payload
-    console.log("payload de cadastro pet", action.payload)
     try{
+        const timestamp = Math.floor(Date.now() / 1000);
+
         let newPet = {
             name: name,
             species: species,
@@ -162,7 +261,7 @@ function* registerPet(action) {
             active: true,
             interestedUsers: 0,
             location: '',
-            id: `${ownerID}-${Math.random()}`,
+            id: timestamp.toString(),
             imageURL: ''
         }
 
@@ -181,9 +280,11 @@ function* registerPet(action) {
 
         yield firebase.firestore()
         .collection("Pets")
-        .add(newPet);
+        .doc(timestamp.toString())
+        .set(newPet);
 
         yield put(PetActions.registerPetSucceeded());
+        yield put(PetActions.listPetsRequested());
         RootNavigation.resetTo('Home');
         Alert.alert('Cadastro de pet realizado com sucesso!');
     }catch(error){
@@ -227,30 +328,90 @@ function* listPets(action) {
 }
 
 function* adoptPet(action) {
-    const { petID, ownerID } = action.payload;
+    const { pet, requestingUser } = action.payload;
 
     try{
-        if (!ownerID) {
+        if (!requestingUser.id) {
+            throw new Error('Usuário não encontrado')
+        }
+        if (!pet.id) {
+            throw new Error('Animal não encontrado')
+        }
+
+        const timestamp = Math.floor(Date.now() / 1000);
+
+        const notification = {
+            acceptable: true,
+            adopterID: requestingUser.id,
+            body: `${requestingUser.name} deseja adotar ${pet.name}`,
+            petID: pet.id,
+            targetID: pet.ownerID,
+            timestamp: timestamp,
+            id: timestamp.toString()
+        } 
+
+        
+        yield firebase.firestore()
+        .collection("Notif")
+        .doc(timestamp.toString())
+        .set(notification);
+
+        Alert.alert("Pedido de adoção realizado com sucesso!")
+        RootNavigation.pop()
+        yield put(PetActions.adoptPetSucceeded());
+    }catch(error){
+        Alert.alert("Falha ao solicitar adoção pet!", error.message)
+        yield put(PetActions.adoptPetFailed());
+    }
+}
+
+function* acceptAdoption(action) {
+    const { notificationID, petID, newOwnerID } = action.payload;
+
+    try{
+        if (!newOwnerID) {
             throw new Error('Usuário não encontrado')
         }
         if (!petID) {
             throw new Error('Animal não encontrado')
         }
-        const petRef = firebase.firestore().collection("Pets");
-        petRef
+
+        yield firebase.firestore()
+        .collection("Pets")
         .doc(petID)
         .update({
-            ownerID: ownerID
+            ownerID: newOwnerID
         });
 
-        yield put(PetActions.listPetsSucceeded([]));
+        yield put(ProfileActions.clearNotificationsRequested([notificationID]));
+        yield put(ProfileActions.sendTextNotificationRequested(newOwnerID, 'Seu pedido de adoção foi aceito!'));
         yield put(PetActions.listPetsRequested());
-        yield put(PetActions.adoptPetSucceeded());
-        Alert.alert("Pet adotado com sucesso!")
-        RootNavigation.pop()
+        yield put(PetActions.acceptAdoptionSucceeded());
+        Alert.alert("Pedido de adoção aprovado com sucesso!");
     }catch(error){
-        Alert.alert("Falha ao adotar pet!", error.message)
-        yield put(PetActions.adoptPetFailed());
+        Alert.alert("Falha ao aprovar pedido de adoção!", error.message)
+        yield put(PetActions.acceptAdoptionFailed());
+    }
+}
+
+function* declineAdoption(action) {
+    const { notificationID, newOwnerID } = action.payload;
+
+    try{
+        if (!newOwnerID) {
+            throw new Error('Usuário não encontrado')
+        }
+        if (!notificationID) {
+            throw new Error('Erro ao excluir solicitação')
+        }
+
+        yield put(ProfileActions.clearNotificationsRequested([notificationID]));
+        yield put(ProfileActions.sendTextNotificationRequested(newOwnerID, 'Seu pedido de adoção foi recusado.'));
+        yield put(PetActions.declineAdoptionSucceeded());
+        Alert.alert("Pedido de adoção recusado com sucesso!");
+    }catch(error){
+        Alert.alert("Falha ao recusar pedido de adoção!", error.message)
+        yield put(PetActions.declineAdoptionFailed());
     }
 }
 
@@ -260,9 +421,14 @@ function* mySaga() {
         takeLatest(profileTypes.LOGIN_REQUESTED, login),
         takeLatest(profileTypes.LOAD_REQUESTED, loadUserInfo),
         takeLatest(profileTypes.LOGOUT_REQUESTED, logout),
+        takeLatest(profileTypes.LOAD_NOTIFICATIONS_REQUESTED, loadNotifications),
+        takeLatest(profileTypes.SEND_TEXT_NOTIFICATION_REQUESTED, sendTextNotification),
+        takeLatest(profileTypes.CLEAR_NOTIFICATIONS_REQUESTED, clearNotifications),
         takeLatest(petTypes.REGISTER_REQUESTED, registerPet),
         takeLatest(petTypes.LIST_REQUESTED, listPets),
         takeLatest(petTypes.ADOPT_REQUESTED, adoptPet),
+        takeLatest(petTypes.ACCEPT_ADOPTION_REQUESTED, acceptAdoption),
+        takeLatest(petTypes.DECLINE_ADOPTION_REQUESTED, declineAdoption),
     ]);
 }
 

@@ -35,9 +35,9 @@ export const loadPetFailed = () =>({
     type: petTypes.LOAD_FAILED
 })
 
-export const adoptPetRequested = (petID, ownerID) => ({
+export const adoptPetRequested = (pet, requestingUser) => ({
     type: petTypes.ADOPT_REQUESTED,
-    payload: { petID, ownerID }
+    payload: { pet, requestingUser }
 })
 export const adoptPetSucceeded = (pet) => ({
     type: petTypes.ADOPT_SUCCEEDED,
@@ -45,6 +45,32 @@ export const adoptPetSucceeded = (pet) => ({
 })
 export const adoptPetFailed = () =>({
     type: petTypes.ADOPT_FAILED
+})
+
+export const acceptAdoptionRequested = (notificationID, petID, newOwnerID) => ({
+    type: petTypes.ACCEPT_ADOPTION_REQUESTED,
+    payload: { notificationID, petID, newOwnerID }
+})
+export const acceptAdoptionSucceeded = () => ({
+    type: petTypes.ACCEPT_ADOPTION_SUCCEEDED
+})
+export const acceptAdoptionFailed = () => ({
+    type: petTypes.ACCEPT_ADOPTION_FAILED
+})
+
+export const declineAdoptionRequested = (notificationID, newOwnerID) => ({
+    type: petTypes.DECLINE_ADOPTION_REQUESTED,
+    payload: { notificationID, newOwnerID }
+})
+export const declineAdoptionSucceeded = () => ({
+    type: petTypes.DECLINE_ADOPTION_SUCCEEDED
+})
+export const declineAdoptionFailed = () => ({
+    type: petTypes.DECLINE_ADOPTION_FAILED
+})
+
+export const clearRefresh = () => ({
+    type: petTypes.CLEAR_REFRESH
 })
 
 export const clearPets = () => ({

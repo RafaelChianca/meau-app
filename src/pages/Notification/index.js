@@ -1,27 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar, Keyboard } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Container, FormContainer } from './styles';
-import FormTextInput from '../../atomic/molecules/FormTextInput';
-import CustomButton from '../../atomic/atoms/CustomButton';
-import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { StatusBar } from 'react-native';
+import { Container, Title, ContentContainer } from './styles';
 import CustomHeader from '../../atomic/molecules/CustomHeader';
-import { loginRequested } from '../../store/actions/profile';
-
-import { Title } from './style';
-
+import NotificationList from '../../atomic/organisms/NotificationList';
 
 export default function Notification() {
-    
-    const loading = useSelector(state => state.profile.loading);
-
-    const navigation = useNavigation();
-    const dispatch = useDispatch();
-
-    const handlePress = async () => {
-        Keyboard.dismiss();
-
-    };
 
     return(
         <Container>
@@ -30,18 +13,14 @@ export default function Notification() {
                 backgroundColor={'#88c9bf'}
                 barStyle={'light-content'}
             />
-            <CustomHeader label='Notificações' rightIcon="notification" showLeftIcon={false} style={{backgroundColor: '#cfe9e5'}} />
-            <Box>
-                <Title>Fulano de tal</Title>
-                <Text>blz blz blz</Text>
-                <CustomButton
-                label="Aceitar"
-                />
-                <CustomButton
-                label="Recusar"
-                />
-            </Box>
-            
+            <CustomHeader
+                label='Notificações'
+                leftIcon="menu"
+                style={{backgroundColor: '#cfe9e5'}}
+            />
+            <ContentContainer>
+                <NotificationList />
+            </ContentContainer>
         </Container>
     );
 }

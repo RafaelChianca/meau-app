@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     error: false,
     loading: false,
     petList: [],
+    refresh: false,
 }
 
 function pet (state = INITIAL_STATE, action) {
@@ -34,6 +35,20 @@ function pet (state = INITIAL_STATE, action) {
             return {...state, error: false, loading: false }
         case petTypes.ADOPT_FAILED:
             return {...state, error: true, loading: false }
+        case petTypes.ACCEPT_ADOPTION_REQUESTED:
+            return {...state, loading: true }
+        case petTypes.ACCEPT_ADOPTION_SUCCEEDED:
+            return {...state, error: false, loading: false, refresh: true }
+        case petTypes.ACCEPT_ADOPTION_FAILED:
+            return {...state, error: true, loading: false }
+        case petTypes.DECLINE_ADOPTION_REQUESTED:
+            return {...state, loading: true }
+        case petTypes.DECLINE_ADOPTION_SUCCEEDED:
+            return {...state, error: false, loading: false, refresh: true }
+        case petTypes.DECLINE_ADOPTION_FAILED:
+            return {...state, error: true, loading: false }
+        case petTypes.CLEAR_REFRESH:
+            return {...state, refresh: false }
         case petTypes.CLEAR:
             return INITIAL_STATE
         default:

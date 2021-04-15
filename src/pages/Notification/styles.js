@@ -12,8 +12,8 @@ export const Title = styled.Text`
     margin-left: 32px;
 `;
 
-export const Box = styled.View`
-    
+export const ContentContainer = styled.View`
+    flex: 1;
 `;
 
 export const Label = styled.Text`
