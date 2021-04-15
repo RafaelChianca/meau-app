@@ -52,7 +52,7 @@ export default function AdoptOption({ pet, headerColor, icon, ...rest }) {
         <PetInfo>{pet.size}</PetInfo>
         {pet.health?.map((item) => {
           return (
-            <PetInfo>{item}</PetInfo>
+            <PetInfo key={item}>{item}</PetInfo>
           )
         })}
       </InfoContainer>

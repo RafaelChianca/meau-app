@@ -17,7 +17,7 @@ export default function MyPetList({ headerColor, icon, ...rest }) {
         <Container {...rest}>
             {petList.filter(item => item.ownerID === user.id)?.map((item) => {
                 return (
-                    <MyPetCard headerColor={headerColor} icon={icon} pet={item} />
+                    <MyPetCard headerColor={headerColor} icon={icon} pet={item} key={item.id} />
                 )
             })}
         </Container>

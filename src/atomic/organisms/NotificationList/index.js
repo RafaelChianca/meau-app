@@ -47,11 +47,11 @@ export default function NotificationList({ headerColor, icon, ...rest }) {
             {notifications?.map((item) => {
                 if (item.acceptable) {
                     return (
-                        <OptionNotification notification={item} />
+                        <OptionNotification key={item.id} notification={item} />
                     )
                 } else {
                     return (
-                        <TextNotification notification={item} />
+                        <TextNotification key={item.id} notification={item} />
                     )
                 }
             })}

@@ -17,7 +17,7 @@ export default function AdoptionList({ headerColor, icon, ...rest }) {
         <Container {...rest}>
             {petList.filter(item => item.ownerID !== user.id)?.map((item) => {
                 return (
-                    <AdoptOption headerColor={headerColor} icon={icon} pet={item} />
+                    <AdoptOption headerColor={headerColor} icon={icon} pet={item} key={item.id} />
                 )
             })}
         </Container>
