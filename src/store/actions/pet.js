@@ -47,9 +47,9 @@ export const adoptPetFailed = () =>({
     type: petTypes.ADOPT_FAILED
 })
 
-export const acceptAdoptionRequested = (notificationID, petID, newOwnerID) => ({
+export const acceptAdoptionRequested = (oldOwnerID, newOwnerID, petID) => ({
     type: petTypes.ACCEPT_ADOPTION_REQUESTED,
-    payload: { notificationID, petID, newOwnerID }
+    payload: { oldOwnerID, newOwnerID, petID }
 })
 export const acceptAdoptionSucceeded = () => ({
     type: petTypes.ACCEPT_ADOPTION_SUCCEEDED
@@ -58,9 +58,9 @@ export const acceptAdoptionFailed = () => ({
     type: petTypes.ACCEPT_ADOPTION_FAILED
 })
 
-export const declineAdoptionRequested = (notificationID, newOwnerID) => ({
+export const declineAdoptionRequested = (oldOwnerID, newOwnerID, petID) => ({
     type: petTypes.DECLINE_ADOPTION_REQUESTED,
-    payload: { notificationID, newOwnerID }
+    payload: { oldOwnerID, newOwnerID, petID }
 })
 export const declineAdoptionSucceeded = () => ({
     type: petTypes.DECLINE_ADOPTION_SUCCEEDED

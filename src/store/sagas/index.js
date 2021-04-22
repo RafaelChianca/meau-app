@@ -173,30 +173,54 @@ function* loadNotifications(action) {
 }
 
 function* clearNotifications(action) {
-    const { notificationIDs, userID } = action.payload;
+    const { notificationIDs, targetID, adopterID, petID } = action.payload;
     
     try{
 
-        if (!notificationIDs) {
-            throw new Error('Erro ao limpar notificações')
-        }
+        if (targetID && adopterID && petID) {
+            const db = firebase.firestore();
+            
+            const writeBatch = db.batch();
+    
+            let notificationRef = db.collection("Notif");
 
-        const db = firebase.firestore();
+            const snapShot = yield call([
+                notificationRef
+                    .where('targetID', '==', targetID)
+                    .where('adopterID', '==', adopterID)
+                    .where('petID', '==', petID),
+                notificationRef.get,
+            ]);
+    
+            let notificationIDs = [];
         
-        const writeBatch = db.batch();
+            snapShot.forEach(document => {
+                notificationIDs.push(document.data());
+            });
 
-        let notificationRef;
+            notificationIDs.forEach(element => {
+                notificationRef = db.collection("Notif").doc(element.id);
+                writeBatch.delete(notificationRef);
+            });
+    
+            writeBatch.commit();
 
-        notificationIDs.forEach(element => {
-            notificationRef = db.collection("Notif").doc(element);
-            writeBatch.delete(notificationRef);
-        });
-
-        writeBatch.commit();
-
-        // IMPLEMENTAR CLEAR NOTIFICATIONS
-        // pegar id do user logado pelo firebase para apagar as dele ou 
-        // apagar todas notificações que tem os ids que chegam no payload
+        } else if (!notificationIDs || (notificationIDs && notificationIDs.length === 0)) {
+            throw new Error('Erro ao limpar notificações')
+        } else {
+            const db = firebase.firestore();
+            
+            const writeBatch = db.batch();
+    
+            let notificationRef;
+    
+            notificationIDs.forEach(element => {
+                notificationRef = db.collection("Notif").doc(element);
+                writeBatch.delete(notificationRef);
+            });
+    
+            writeBatch.commit();
+        }
 
         // RECARREGAR LISTA DE NOTIFICAÇÕES
         yield put(ProfileActions.clearNotificationsSucceeded());
@@ -366,7 +390,7 @@ function* adoptPet(action) {
 }
 
 function* acceptAdoption(action) {
-    const { notificationID, petID, newOwnerID } = action.payload;
+    const { oldOwnerID, newOwnerID, petID } = action.payload;
 
     try{
         if (!newOwnerID) {
@@ -383,7 +407,7 @@ function* acceptAdoption(action) {
             ownerID: newOwnerID
         });
 
-        yield put(ProfileActions.clearNotificationsRequested([notificationID]));
+        yield put(ProfileActions.clearNotificationsRequested(null, oldOwnerID, newOwnerID, petID));
         yield put(ProfileActions.sendTextNotificationRequested(newOwnerID, 'Seu pedido de adoção foi aceito!'));
         yield put(PetActions.listPetsRequested());
         yield put(PetActions.acceptAdoptionSucceeded());
@@ -395,20 +419,17 @@ function* acceptAdoption(action) {
 }
 
 function* declineAdoption(action) {
-    const { notificationID, newOwnerID } = action.payload;
+    const { oldOwnerID, newOwnerID, petID } = action.payload;
 
     try{
         if (!newOwnerID) {
             throw new Error('Usuário não encontrado')
         }
-        if (!notificationID) {
-            throw new Error('Erro ao excluir solicitação')
-        }
 
-        yield put(ProfileActions.clearNotificationsRequested([notificationID]));
+        yield put(ProfileActions.clearNotificationsRequested(null, oldOwnerID, newOwnerID, petID));
         yield put(ProfileActions.sendTextNotificationRequested(newOwnerID, 'Seu pedido de adoção foi recusado.'));
         yield put(PetActions.declineAdoptionSucceeded());
-        Alert.alert("Pedido de adoção recusado com sucesso!");
+        // Alert.alert("Pedido de adoção recusado com sucesso!");
     }catch(error){
         Alert.alert("Falha ao recusar pedido de adoção!", error.message)
         yield put(PetActions.declineAdoptionFailed());
