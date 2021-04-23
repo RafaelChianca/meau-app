@@ -173,7 +173,7 @@ function* loadNotifications(action) {
 }
 
 function* clearNotifications(action) {
-    const { notificationIDs, targetID, petID } = action.payload;
+    const { notificationIDs, targetID, adopterID, petID } = action.payload;
     
     try{
 
@@ -184,12 +184,25 @@ function* clearNotifications(action) {
     
             let notificationRef = db.collection("Notif");
 
-            const snapShot = yield call([
-                notificationRef
-                    .where('targetID', '==', targetID)
-                    .where('petID', '==', petID),
-                notificationRef.get,
-            ]);
+            let snapShot;
+
+            if (adopterID) {
+                snapShot = yield call([
+                    notificationRef
+                        .where('targetID', '==', targetID)
+                        .where('adopterID', '==', adopterID)
+                        .where('petID', '==', petID),
+                    notificationRef.get,
+                ]);
+            } else {
+                snapShot = yield call([
+                    notificationRef
+                        .where('targetID', '==', targetID)
+                        .where('petID', '==', petID),
+                    notificationRef.get,
+                ]);
+            }
+
     
             let notificationIDs = [];
         
@@ -407,7 +420,7 @@ function* acceptAdoption(action) {
             interestedUsers: [],
         });
 
-        yield put(ProfileActions.clearNotificationsRequested(null, oldOwnerID, petID));
+        yield put(ProfileActions.clearNotificationsRequested(null, oldOwnerID, null, petID));
         yield put(ProfileActions.sendTextNotificationRequested(newOwnerID, 'Seu pedido de adoção foi aceito!'));
         yield put(PetActions.listPetsRequested());
         yield put(PetActions.acceptAdoptionSucceeded());
@@ -426,7 +439,7 @@ function* declineAdoption(action) {
             throw new Error('Usuário não encontrado')
         }
 
-        yield put(ProfileActions.clearNotificationsRequested(null, oldOwnerID, petID));
+        yield put(ProfileActions.clearNotificationsRequested(null, oldOwnerID, newOwnerID, petID));
         yield put(ProfileActions.sendTextNotificationRequested(newOwnerID, 'Seu pedido de adoção foi recusado.'));
         yield put(PetActions.declineAdoptionSucceeded());
         // Alert.alert("Pedido de adoção recusado com sucesso!");
