@@ -68,9 +68,9 @@ export const sendTextNotificationFailed = () => ({
     type: profileTypes.SEND_TEXT_NOTIFICATION_FAILED
 })
 
-export const clearNotificationsRequested = (notificationIDs, targetID, adopterID, petID) => ({
+export const clearNotificationsRequested = (notificationIDs, targetID, petID) => ({
     type: profileTypes.CLEAR_NOTIFICATIONS_REQUESTED,
-    payload: { notificationIDs, targetID, adopterID, petID },
+    payload: { notificationIDs, targetID, petID },
 })
 export const clearNotificationsSucceeded = () => ({
     type: profileTypes.CLEAR_NOTIFICATIONS_SUCCEEDED
