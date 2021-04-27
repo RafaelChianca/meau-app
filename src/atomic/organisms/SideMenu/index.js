@@ -60,8 +60,13 @@ export const SideMenu = (props) => {
                     />
                     <MenuItem
                         label='Meus pets'
-                        separator={false}
+                        separator={true}
                         onPress={() => navigation.navigate('MyPets')}
+                    />
+                    <MenuItem
+                        label='Chat'
+                        separator={false}
+                        onPress={() => navigation.navigate('Chat')}
                     />
                 </MenuCategory>
                 {user && Object.keys(user).length > 0 &&

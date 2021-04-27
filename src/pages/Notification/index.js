@@ -7,7 +7,7 @@ import NotificationList from '../../atomic/organisms/NotificationList';
 export default function Notification() {
 
     return(
-        <Container>
+        <Container {...rest}>
             <StatusBar
                 animated
                 backgroundColor={'#88c9bf'}
