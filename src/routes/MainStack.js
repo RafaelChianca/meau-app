@@ -10,7 +10,8 @@ import Adopt from '../pages/Adopt';
 import MyPets from '../pages/MyPets';
 import PetDetails from '../pages/PetDetails';
 import Notification from '../pages/Notification';
-import Chat from '../pages/Chat'
+import Chat from '../pages/Chat';
+import ChatDetails from '../pages/ChatDetails';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ export default () => {
         <Stack.Screen name="PetDetails" component={PetDetails} options={{headerShown: false}}/>
         <Stack.Screen name="Notification" component={Notification} options={{headerShown: false}}/>
         <Stack.Screen name="Chat" component={Chat} options={{headerShown: false}}/>
+        <Stack.Screen name="ChatDetails" component={ChatDetails} options={{headerShown: false}}/>
     </Stack.Navigator>
   );
 };

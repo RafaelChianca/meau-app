@@ -66,7 +66,8 @@ export default function CustomHeader({ label, showLeftIcon = true, leftIcon = 'b
             <Fontsome name="bell" color="#434343" size={24}/>
           </>
         )
-    
+      case 'opt':
+         return <Icon name="ellipsis-v" color="#434343" size={24}/>
       default:
         return <></>
     }
