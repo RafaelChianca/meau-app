@@ -67,7 +67,7 @@ export default function ChatDetails() {
             <GiftedChat
                 messages={messages}
                 dateFormat={'DD/MM/YYYY'}
-                timeFormat={'h:mm'}
+                timeFormat={'HH:mm'}
                 renderBubble={renderBubble}
                 onSend={messages => onSend(messages)}
                 user={{
