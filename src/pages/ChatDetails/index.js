@@ -25,26 +25,25 @@ export default function ChatDetails() {
                 receivedMessages.push({
                     _id: element.id,
                     ...element.data(),        
-                });  
-            });       
+                });
+            });
             setMessages(GiftedChat.append(messages, receivedMessages));
         });
         
     }, []);
 
     function onSend(messages) {
-        console.log('mensagens ---------', messages[0])
-
-        firebase.firestore()
-        .collection('Messages')
-        .add(messages[0]);
+        if (messages && messages.length >= 1) {
+            firebase.firestore()
+            .collection('Messages')
+            .add(messages[0]);
+        }
     }
 
-    function  renderBubble(bubbles) {
-
-        console.log('props bubble --------', bubbles)
-        return (      
-            <Bubble {...bubbles}/>
+    function  renderBubble(bubbleProps) {
+        console.log("props do buble ----------------", bubbleProps)
+        return (
+            <Bubble {...bubbleProps}/>
         );
         
     }
@@ -73,11 +72,15 @@ export default function ChatDetails() {
             </Group> */}
             <GiftedChat
                 messages={messages}
-                dateFormat={'DD-MM-YYYY'}
-                timeFormat={'hh:mm'}
+                // dateFormat={'DD-MM-YYYY'}
+                timeFormat={'h:mm'}
                 renderBubble={renderBubble}
                 onSend={messages => onSend(messages)}
-                user={user}
+                user={{
+                    _id: user.id,
+                    avatar: user.imageURL
+                }}
+                
             />
         </Container>
     );
