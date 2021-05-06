@@ -1,56 +1,50 @@
 import React, { useState, useEffect} from 'react';
 import { StatusBar } from 'react-native';
-import { Container, ContentContainer, CustomInput, CustomText, Send, Group } from './styles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Container } from './styles';
 import CustomHeader from '../../atomic/molecules/CustomHeader';
-import CustomButton from '../../atomic/atoms/CustomButton';
-import CustomTextInput from '../../atomic/atoms/CustomTextInput';
-import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
+import {GiftedChat, Bubble} from 'react-native-gifted-chat';
 import * as firebase from 'firebase';
-import uuid from 'uuid';
+import { useSelector } from 'react-redux';
 
 export default function ChatDetails() {
 
-    const [user, setUser] =  useState(firebase.auth().currentUser);
+    const { user } = useSelector(state => state.profile);
     const [messages, setMessages] =  useState([]);
 
     useEffect(() => {
 
-        console.log(user);
-        
         const db =  firebase.firestore();
         
         db.collection('Messages')
         
         .orderBy('createdAt', 'desc')
         
-        .onSnapshot(function(doc) {    
+        .onSnapshot(function(doc) {
             let receivedMessages = [];
-            doc.docs.map(doc => {
+            doc.docs.map(element => {
                 receivedMessages.push({
-                    _id: doc.id,
-                    ...doc.data(),        
+                    _id: element.id,
+                    ...element.data(),        
                 });  
             });       
             setMessages(GiftedChat.append(messages, receivedMessages));
         });
         
-    }, [user]);
+    }, []);
 
-    function  onSend([messages]) {
+    function onSend(messages) {
+        console.log('mensagens ---------', messages[0])
 
         firebase.firestore()
         .collection('Messages')
-        .add(messages);
-        
+        .add(messages[0]);
     }
 
-    function  renderBubble(props) {
+    function  renderBubble(bubbles) {
 
+        console.log('props bubble --------', bubbles)
         return (      
-            <>
-            <Bubble {...props}/>
-            </>
+            <Bubble {...bubbles}/>
         );
         
     }
@@ -80,9 +74,9 @@ export default function ChatDetails() {
             <GiftedChat
                 messages={messages}
                 dateFormat={'DD-MM-YYYY'}
-                timeFormat={'h:mm'}
+                timeFormat={'hh:mm'}
                 renderBubble={renderBubble}
-                onSend={messages =>  onSend(messages)}
+                onSend={messages => onSend(messages)}
                 user={user}
             />
         </Container>
