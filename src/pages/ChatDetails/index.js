@@ -22,11 +22,15 @@ export default function ChatDetails() {
         .onSnapshot(function(doc) {
             let receivedMessages = [];
             doc.docs.map(element => {
+                let elementInfo = element.data();
+                
                 receivedMessages.push({
+                    ...elementInfo,
                     _id: element.id,
-                    ...element.data(),        
+                    createdAt: elementInfo.createdAt.toDate(),
                 });
             });
+
             setMessages(GiftedChat.append(messages, receivedMessages));
         });
         
@@ -41,7 +45,6 @@ export default function ChatDetails() {
     }
 
     function  renderBubble(bubbleProps) {
-        console.log("props do buble ----------------", bubbleProps)
         return (
             <Bubble {...bubbleProps}/>
         );
@@ -61,18 +64,9 @@ export default function ChatDetails() {
                 rightIcon="opt"
                 style={{backgroundColor: '#88c9bf'}}
             />
-            {/* <ContentContainer>
-                <CustomText>blablablaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</CustomText>
-            </ContentContainer>
-            <Group>
-                <CustomInput style={{marginRight: 16}} />
-                <Send style={{marginTop: 8}}>
-                <Icon name='send' color='white' size={24}/>
-                </Send>
-            </Group> */}
             <GiftedChat
                 messages={messages}
-                // dateFormat={'DD-MM-YYYY'}
+                dateFormat={'DD/MM/YYYY'}
                 timeFormat={'h:mm'}
                 renderBubble={renderBubble}
                 onSend={messages => onSend(messages)}
@@ -80,7 +74,6 @@ export default function ChatDetails() {
                     _id: user.id,
                     avatar: user.imageURL
                 }}
-                
             />
         </Container>
     );
