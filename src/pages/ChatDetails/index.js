@@ -1,8 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'react-native';
-import { Container } from './styles';
+import { Container, ContentContainer } from './styles';
 import CustomHeader from '../../atomic/molecules/CustomHeader';
-import {GiftedChat, Bubble} from 'react-native-gifted-chat';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {GiftedChat, Bubble, Send, InputToolbar} from 'react-native-gifted-chat';
 import * as firebase from 'firebase';
 import { useSelector } from 'react-redux';
 
@@ -46,10 +47,67 @@ export default function ChatDetails() {
 
     function  renderBubble(bubbleProps) {
         return (
-            <Bubble {...bubbleProps}/>
+            <ContentContainer>
+                <Bubble 
+                {...bubbleProps}
+                wrapperStyle={{
+                    right: 
+                    {
+                    backgroundColor: '#cfe9e5',
+                    marginBottom: 12,
+                    marginRight: 16,
+                    width: 268,
+                    padding: 10,
+                    minHeight: 56,
+                    }, 
+                    left: 
+                    {
+                    backgroundColor: 'white',
+                    marginBottom: 12,
+                    marginLeft: 16,
+                    width: 268,
+                    padding: 10,
+                    minHeight: 56
+                    },
+                }}
+                textProps={{
+                    style: {
+                      color:'#434343',
+                    },
+                }}
+                timeTextStyle={{
+                    right: {
+                        color:'#434343',
+                    },
+                    left: {
+                        color:'#434343',
+                    },
+                }}
+                />
+            </ContentContainer>
         );
         
     }
+
+    function renderSend(props) {
+        return (
+          <Send {...props} >
+            <Icon name='send' color='#88c9bf' size={24} />
+          </Send>
+        );
+    }
+
+    function customtInputToolbar(props) {
+        return (
+          <InputToolbar
+            {...props}
+            containerStyle={{
+              backgroundColor: "white",
+              padding: 8,
+            }}
+          />
+        );
+    };
 
     return(
         <Container>
@@ -74,6 +132,11 @@ export default function ChatDetails() {
                     _id: user.id,
                     avatar: user.imageURL
                 }}
+                alwaysShowSend
+                renderSend={renderSend}
+                renderInputToolbar={customtInputToolbar}
+                renderAvatar={() => null}
+                showAvatarForEveryMessage={true}
             />
         </Container>
     );
