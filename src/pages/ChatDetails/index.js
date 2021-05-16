@@ -38,12 +38,12 @@ export default function ChatDetails({route}) {
 
     useEffect(() => {
         return () => {
-            if (lastMessage && Object.keys(lastMessage).length > 0) {
-                if (route.params.item && !route.params.item.lastMessage) {
-                    route.params.item.lastMessage = lastMessage;
-                } else {
-                    route.params.item.lastMessage.text = lastMessage?.text;
-                }
+            if (lastMessage !== null && lastMessage !== undefined && Object.keys(lastMessage).length > 0) {
+                // if (route.params.item && !route.params.item.lastMessage) {
+                //     route.params.item.lastMessage = lastMessage;
+                // } else {
+                //     route.params.item.lastMessage.text = lastMessage?.text;
+                // }
                 dispatch(updateChatRequested(route.params.id, lastMessage));
             }
         }
