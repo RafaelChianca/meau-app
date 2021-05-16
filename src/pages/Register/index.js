@@ -37,7 +37,7 @@ export default function Register() {
             [
                 {
                     text: 'Não',
-                    onPress: () => console.log('Cancel Pressed'),
+                    onPress: () => {},
                     style: 'cancel',
                 },
                 {text: 'OK', onPress: () => {}},
@@ -53,7 +53,7 @@ export default function Register() {
             [
                 {
                     text: 'Não',
-                    onPress: () => console.log('Cancel Pressed'),
+                    onPress: {},
                     style: 'cancel',
                 },
                 {text: 'OK', onPress: () => {}},

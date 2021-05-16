@@ -12,6 +12,7 @@ export const Group = styled.View`
 
 export const Card = styled.TouchableOpacity`
     background-color: white;
+    height: 80px;
 `;
 
 export const HiddenContainer = styled.View`

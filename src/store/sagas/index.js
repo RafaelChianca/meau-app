@@ -501,7 +501,7 @@ function* createChat(action) {
         let chatsRef = firebase.firestore().collection('Chats');
 
         const snapShot = yield call([
-            chatsRef.where('userIDs', 'array-contains-any', users),
+            chatsRef.where('userIDs', 'in', [[users[0].id, users[1].id], [users[1].id, users[0].id]]),
             chatsRef.get,
         ]);
 

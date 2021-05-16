@@ -1,29 +1,42 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import * as firebase from 'firebase';
 
 import InputLabel from '../../atoms/InputLabel';
 import ProfilePicture from '../../atoms/ProfilePicture';
 import { InfoText } from '../../molecules/TextNotification/styles';
-import { Container, Group, Card, HiddenContainer, RemoveButton } from './styles';
-import { deleteChatRequested, listChatsRequested } from '../../../store/actions/chat';
+import { Container, Group, Card } from './styles';
+import { deleteChatRequested } from '../../../store/actions/chat';
 
 export default function ChatList({...rest }) {
     const { user } = useSelector(state => state.profile);
-    const { chatList } = useSelector(state => state.chat);
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const [availableChats, setAvailableChats] = useState([])
 
     useEffect(() => {
-        dispatch(listChatsRequested(user.id));
-    }, [])
+        const db =  firebase.firestore();
+        
+        db.collection('Chats')
+        .where('userIDs', 'array-contains', user.id)
+        .orderBy('lastModified', 'desc')
+        .onSnapshot(function(doc) {
+            let chats = [];
+            doc.docs.map(element => {
+                let elementInfo = element.data();
+                chats.push(elementInfo);
+            });
+            setAvailableChats(chats);
+        });
+    }, []);
 
     const openChat = (chatItem) => {
         navigation.navigate('ChatDetails', {id: chatItem.id, receiver: renderUserName(chatItem), item: chatItem});
     }
 
+    //TO DO
     const deleteChat = (chatID) => {
         dispatch(deleteChatRequested(chatID));
     }
@@ -70,7 +83,7 @@ export default function ChatList({...rest }) {
     return(
         <Container {...rest}>
             <SwipeListView
-                data={chatList}
+                data={availableChats}
                 renderItem={(data) => (
                     <Card activeOpacity={0.9} onPress={() => openChat(data?.item)}>
                         <Group style={{flexDirection: 'row', borderColor:'#bdbdbd', borderBottomWidth:1, marginTop:20}}>

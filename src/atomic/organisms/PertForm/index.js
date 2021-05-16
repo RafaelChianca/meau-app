@@ -58,7 +58,7 @@ export default function PertForm({ ...rest }) {
             [
                 {
                     text: 'Não',
-                    onPress: () => console.log('Cancel Pressed'),
+                    onPress: {},
                     style: 'cancel',
                 },
                 // {text: 'OK', onPress: () => openSettings().catch(() => console.warn('cannot open settings'))},
@@ -75,7 +75,7 @@ export default function PertForm({ ...rest }) {
             [
                 {
                     text: 'Não',
-                    onPress: () => console.log('Cancel Pressed'),
+                    onPress: () => {},
                     style: 'cancel',
                 },
                 // {text: 'OK', onPress: () => openSettings().catch(() => console.warn('cannot open settings'))},
