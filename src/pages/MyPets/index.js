@@ -12,7 +12,13 @@ export default function MyPets () {
                 backgroundColor="#589b9b"
                 barStyle={'dark-content'}
             />
-            <CustomHeader leftIcon='menu' label='Meus Pets' style={{backgroundColor: '#88c9bf'}} rightIcon='search'/>
+            <CustomHeader
+                leftIcon='menu'
+                label='Meus Pets'
+                style={{backgroundColor: '#88c9bf'}}
+                // TO DO
+                // rightIcon='search'
+            />
             <MyPetList headerColor={'#cfe9e5'} icon='info' />
         </Container>
     )

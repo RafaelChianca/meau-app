@@ -12,7 +12,13 @@ export default function Adopt () {
                 backgroundColor="#f7a800"
                 barStyle={'dark-content'}
             />
-            <CustomHeader leftIcon='menu' label='Adotar' style={{backgroundColor: '#ffd358'}} rightIcon='search'/>
+            <CustomHeader
+                leftIcon='menu'
+                label='Adotar'
+                style={{backgroundColor: '#ffd358'}}
+                // TO DO
+                // rightIcon='search'
+            />
             <AdoptionList />
         </Container>
     )

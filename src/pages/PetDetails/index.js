@@ -38,7 +38,15 @@ export default function PetDetails({route, ... rest}) {
                 backgroundColor={route.params.mainColor || "#f7a800"}
                 barStyle={"light-content"}
             />        
-            <CustomHeader label={route.params.pet.name} rightIcon="share" style={{backgroundColor: (route.params.mainColor || "#f7a800"), marginBottom: 0}}/>
+            <CustomHeader
+                label={route.params.pet.name}
+                // TO DO
+                // rightIcon="share"
+                style={{
+                    backgroundColor: (route.params.mainColor || "#f7a800")
+                    , marginBottom: 0
+                }}
+            />
             <PetInfo pet={route.params.pet} {...rest}/>
             {user.id === route?.params?.pet?.owner?.id &&
                 <CustomButton

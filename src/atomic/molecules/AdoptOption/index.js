@@ -33,9 +33,10 @@ export default function AdoptOption({ pet, headerColor, icon, ...rest }) {
     <Container onPress={openPet} {...rest}>
       <HeaderContainer headerColor={headerColor}>
         <PetName>{pet.name ? pet.name : ''}</PetName>
-        <TouchableOpacity onPress={addFavorite}>
+        {/* TO DO */}
+        {/* <TouchableOpacity onPress={addFavorite}>
           <Icon name={selectIconType()} color={'#434343'} size={24}/>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </HeaderContainer>
       <PetImage
         source={{

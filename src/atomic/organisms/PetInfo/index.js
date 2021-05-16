@@ -43,10 +43,11 @@ export default function PetInfo({ pet, ...rest }) {
                             : catPicture
                 }}
             />
-            <FavButton>
+            {/* TO DO */}
+            {/* <FavButton>
                 <EvilIcon name="heart" color="#434343" size={48}/>
-            </FavButton>
-            <Text style={{fontSize:16, color:"#434343", fontWeight: 'bold', marginLeft: 30, marginTop: -24, marginBottom: 16 }}>{pet.name}</Text>
+            </FavButton> */}
+            <Text style={{fontSize:16, color:"#434343", fontWeight: 'bold', marginLeft: 30, marginTop: 10, marginBottom: 10 }}>{pet.name}</Text>
             <Group>
                 <TextGroup>
                     <Titulo>Sexo</Titulo>
