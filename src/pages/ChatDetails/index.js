@@ -5,21 +5,21 @@ import CustomHeader from '../../atomic/molecules/CustomHeader';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {GiftedChat, Bubble, Send, InputToolbar} from 'react-native-gifted-chat';
 import * as firebase from 'firebase';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateChatRequested } from '../../store/actions/chat';
 
-export default function ChatDetails() {
-
+export default function ChatDetails({route}) {
+    const dispatch = useDispatch();
     const { user } = useSelector(state => state.profile);
     const [messages, setMessages] =  useState([]);
+    const [lastMessage, setLastMessage] =  useState(null);
 
     useEffect(() => {
-
         const db =  firebase.firestore();
         
         db.collection('Messages')
-        
+        .where('chatID', '==', route.params.id)
         .orderBy('createdAt', 'desc')
-        
         .onSnapshot(function(doc) {
             let receivedMessages = [];
             doc.docs.map(element => {
@@ -31,21 +31,36 @@ export default function ChatDetails() {
                     createdAt: elementInfo.createdAt.toDate(),
                 });
             });
-
+            setLastMessage(receivedMessages[0]);
             setMessages(GiftedChat.append(messages, receivedMessages));
         });
-        
     }, []);
+
+    useEffect(() => {
+        return () => {
+            if (lastMessage && Object.keys(lastMessage).length > 0) {
+                if (route.params.item && !route.params.item.lastMessage) {
+                    route.params.item.lastMessage = lastMessage;
+                } else {
+                    route.params.item.lastMessage.text = lastMessage?.text;
+                }
+                dispatch(updateChatRequested(route.params.id, lastMessage));
+            }
+        }
+    }, [lastMessage])
 
     function onSend(messages) {
         if (messages && messages.length >= 1) {
             firebase.firestore()
             .collection('Messages')
-            .add(messages[0]);
+            .add({
+                ...messages[0],
+                chatID: route.params.id
+            });
         }
     }
 
-    function  renderBubble(bubbleProps) {
+    function renderBubble(bubbleProps) {
         return (
             <ContentContainer>
                 <Bubble 
@@ -53,21 +68,21 @@ export default function ChatDetails() {
                 wrapperStyle={{
                     right: 
                     {
-                    backgroundColor: '#cfe9e5',
-                    marginBottom: 12,
-                    marginRight: 16,
-                    width: 268,
-                    padding: 10,
-                    minHeight: 56,
-                    }, 
+                        backgroundColor: '#cfe9e5',
+                        marginBottom: 12,
+                        marginRight: 16,
+                        width: 268,
+                        padding: 10,
+                        minHeight: 56,
+                        }, 
                     left: 
                     {
-                    backgroundColor: 'white',
-                    marginBottom: 12,
-                    marginLeft: 16,
-                    width: 268,
-                    padding: 10,
-                    minHeight: 56
+                        backgroundColor: 'white',
+                        marginBottom: 12,
+                        marginLeft: 16,
+                        width: 268,
+                        padding: 10,
+                        minHeight: 56
                     },
                 }}
                 textProps={{
@@ -117,7 +132,7 @@ export default function ChatDetails() {
                 barStyle={'light-content'}
             />
             <CustomHeader
-                label='Nome da pessoa'
+                label={route.params.receiver}
                 leftIcon="back"
                 rightIcon="opt"
                 style={{backgroundColor: '#88c9bf'}}

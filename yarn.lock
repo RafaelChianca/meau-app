@@ -11549,6 +11549,11 @@ react-native-screens@~2.15.2:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.15.2.tgz#a449700e895b462937211ec72ed6f09652758f06"
   integrity sha512-CagNf2APXkVoRlF3Mugr264FbKbrBg9eXUkqhIPVeZB8EsdS8XPrnt99yj/pzmT+yJMBY0dGrjXT8+68WYh6YQ==
 
+react-native-swipe-list-view@^3.2.7:
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/react-native-swipe-list-view/-/react-native-swipe-list-view-3.2.7.tgz#ab906bfaa96ece9adc3e5469cb790fe5f7e9d973"
+  integrity sha512-lyTspC/vBco4yRFGou6X8m/ce1eGtSCxGAxlEzpZDin97kwOQTeV+PuQxoGFiCs9wgLQCoFHvRmOuIreSn8fkQ==
+
 react-native-typing-animation@^0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/react-native-typing-animation/-/react-native-typing-animation-0.1.7.tgz#8f2cf08d9400ae543a110292eb7d71523dda5528"

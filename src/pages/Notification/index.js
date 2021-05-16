@@ -1,10 +1,10 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import { Container, Title, ContentContainer } from './styles';
+import { Container, ContentContainer } from './styles';
 import CustomHeader from '../../atomic/molecules/CustomHeader';
 import NotificationList from '../../atomic/organisms/NotificationList';
 
-export default function Notification() {
+export default function Notification({...rest}) {
 
     return(
         <Container {...rest}>

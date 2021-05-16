@@ -5,6 +5,7 @@ import EvilIcon from 'react-native-vector-icons/EvilIcons';
 import CustomButton from '../../atoms/CustomButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { adoptPetRequested } from '../../../store/actions/pet';
+import { createChatRequested } from '../../../store/actions/chat';
 
 export default function PetInfo({ pet, ...rest }) {
     const dispatch = useDispatch()
@@ -20,10 +21,15 @@ export default function PetInfo({ pet, ...rest }) {
             'Ao confirmar será enviada uma notificação ao tutor do animal.',
             [
                 { text: 'Cancelar' },
-                { text: "Ok", onPress: () => dispatch(adoptPetRequested(pet, user)) }
+                { text: "Ok", onPress: () => requestAdoption() }
             ],
             { cancelable: true }
         )
+    }
+
+    const requestAdoption = () => {
+        dispatch(adoptPetRequested(pet, user))
+        dispatch(createChatRequested([pet.owner, {name: user.name, id: user.id, imageURL: user.imageURL}]))
     }
 
     return(
@@ -103,7 +109,7 @@ export default function PetInfo({ pet, ...rest }) {
                     <Text>{pet.about}</Text>
                 </TextGroup>
             </Group>
-            {pet.ownerID !== user.id &&
+            {pet.owner.id !== user.id &&
                 <CustomButton label="PRETENDO ADOTAR" onPress={adopt} style={{marginBottom: 28, marginTop: 12}} />
             }
         </>

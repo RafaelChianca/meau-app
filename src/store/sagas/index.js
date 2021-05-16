@@ -3,7 +3,8 @@ import { call, all, put, takeLatest } from 'redux-saga/effects'
 import * as firebase from 'firebase';
 import * as ProfileActions from '../actions/profile';
 import * as PetActions from '../actions/pet';
-import { petTypes, profileTypes } from '../actionTypes';
+import * as ChatActions from '../actions/chat';
+import { chatTypes, petTypes, profileTypes } from '../actionTypes';
 import * as RootNavigation from '../../services/RootNavigation'
 
 function* createUser(action) {
@@ -173,7 +174,7 @@ function* loadNotifications(action) {
 }
 
 function* clearNotifications(action) {
-    const { notificationIDs, targetID, adopterID, petID } = action.payload;
+    const { notificationIDs, targetID, adopter, petID } = action.payload;
     
     try{
 
@@ -186,11 +187,11 @@ function* clearNotifications(action) {
 
             let snapShot;
 
-            if (adopterID) {
+            if (adopter && adopter.id) {
                 snapShot = yield call([
                     notificationRef
                         .where('targetID', '==', targetID)
-                        .where('adopterID', '==', adopterID)
+                        .where('adopter.id', '==', adopter.id)
                         .where('petID', '==', petID),
                     notificationRef.get,
                 ]);
@@ -217,7 +218,9 @@ function* clearNotifications(action) {
     
             writeBatch.commit();
 
-        } else if (!notificationIDs || (notificationIDs && notificationIDs.length === 0)) {
+        }
+        
+        if (!notificationIDs || (notificationIDs && notificationIDs.length === 0)) {
             throw new Error('Erro ao limpar notificações')
         } else {
             const db = firebase.firestore();
@@ -277,7 +280,7 @@ function* sendTextNotification(action) {
 // PET FUNCTIONS --------------------------------------------------------------
 
 function* registerPet(action) {
-    const { name, species, sex, size, age, temperment, health, diseases, conditions, time, about, ownerID, image } = action.payload
+    const { name, species, sex, size, age, temperment, health, diseases, conditions, time, about, owner, image } = action.payload
     try{
         const timestamp = Math.floor(Date.now() / 1000);
 
@@ -293,7 +296,7 @@ function* registerPet(action) {
             conditions: conditions,
             time: time,
             about: about,
-            ownerID: ownerID,
+            owner: owner,
             active: true,
             interestedUsers: [],
             location: '',
@@ -330,24 +333,15 @@ function* registerPet(action) {
 }
 
 function* listPets(action) {
-    // const { page, limit, userID } = action.payload;
 
     try{
   
         let petsRef = firebase.firestore().collection('Pets');
 
         const snapShot = yield call([
-        petsRef.where('active', '==', true),
+            petsRef.where('active', '==', true),
             petsRef.get,
-        ]);  
-        // QUERY WITH OWNERID
-        // if (userID !== undefined) {
-        //     snapShot = yield call([
-        //         petsRef.where('ownerID', '==', userID),
-        //         petsRef.get,
-        //     ]);
-        // } else {
-        // }
+        ]);
 
         let petList = [];
     
@@ -360,6 +354,27 @@ function* listPets(action) {
     }catch(error){
         Alert.alert("Falha ao buscar pets!", error.message)
         yield put(PetActions.listPetsFailed());
+    }
+}
+
+function* deletePet(action) {
+
+    const { petID } = action.payload;
+
+    try{
+  
+        yield firebase
+            .firestore()
+            .collection('Pets')
+            .doc(petID)
+            .delete()
+
+        yield put(PetActions.deletePetSucceeded());
+        yield put(PetActions.listPetsRequested());
+        RootNavigation.pop();
+    }catch(error){
+        Alert.alert("Falha ao excluir pet!", error.message)
+        yield put(PetActions.deletePetFailed());
     }
 }
 
@@ -378,10 +393,10 @@ function* adoptPet(action) {
 
         const notification = {
             acceptable: true,
-            adopterID: requestingUser.id,
+            adopter: {id: requestingUser.id, name: requestingUser.name},
             body: `${requestingUser.name} deseja adotar ${pet.name}`,
             petID: pet.id,
-            targetID: pet.ownerID,
+            targetID: pet.owner.id,
             timestamp: timestamp,
             id: timestamp.toString()
         } 
@@ -402,10 +417,10 @@ function* adoptPet(action) {
 }
 
 function* acceptAdoption(action) {
-    const { oldOwnerID, newOwnerID, petID } = action.payload;
+    const { oldOwnerID, newOwner, petID } = action.payload;
 
     try{
-        if (!newOwnerID) {
+        if (!newOwner || !newOwner.id) {
             throw new Error('Usuário não encontrado')
         }
         if (!petID) {
@@ -416,12 +431,12 @@ function* acceptAdoption(action) {
         .collection("Pets")
         .doc(petID)
         .update({
-            ownerID: newOwnerID,
+            owner: newOwner,
             interestedUsers: [],
         });
 
         yield put(ProfileActions.clearNotificationsRequested(null, oldOwnerID, null, petID));
-        yield put(ProfileActions.sendTextNotificationRequested(newOwnerID, 'Seu pedido de adoção foi aceito!'));
+        yield put(ProfileActions.sendTextNotificationRequested(newOwner.id, 'Seu pedido de adoção foi aceito!'));
         yield put(PetActions.listPetsRequested());
         yield put(PetActions.acceptAdoptionSucceeded());
         Alert.alert("Pedido de adoção aprovado com sucesso!");
@@ -432,20 +447,125 @@ function* acceptAdoption(action) {
 }
 
 function* declineAdoption(action) {
-    const { oldOwnerID, newOwnerID, petID } = action.payload;
+    const { oldOwnerID, newOwner, petID } = action.payload;
 
     try{
-        if (!newOwnerID) {
+        if (!newOwner || !newOwner.id) {
             throw new Error('Usuário não encontrado')
         }
 
-        yield put(ProfileActions.clearNotificationsRequested(null, oldOwnerID, newOwnerID, petID));
-        yield put(ProfileActions.sendTextNotificationRequested(newOwnerID, 'Seu pedido de adoção foi recusado.'));
+        yield put(ProfileActions.clearNotificationsRequested(null, oldOwnerID, newOwner.id, petID));
+        yield put(ProfileActions.sendTextNotificationRequested(newOwner.id, 'Seu pedido de adoção foi recusado.'));
         yield put(PetActions.declineAdoptionSucceeded());
-        // Alert.alert("Pedido de adoção recusado com sucesso!");
     }catch(error){
         Alert.alert("Falha ao recusar pedido de adoção!", error.message)
         yield put(PetActions.declineAdoptionFailed());
+    }
+}
+
+// CHAT FUNCTIONS --------------------------------------------------------------
+function* listChat(action) {
+    const { userID } = action.payload
+
+    try{
+
+        if(!userID) {
+            throw new Error('Usuário não encontrado');
+        }
+
+        let chatsRef = firebase.firestore().collection('Chats');
+
+        const snapShot = yield call([
+            chatsRef.where('userIDs', 'array-contains', userID).orderBy('lastModified', 'desc'),
+            chatsRef.get,
+        ]);
+
+        let chatList = [];
+        
+        snapShot.forEach(document => {
+            chatList.push(document.data());
+        });
+
+        yield put(ChatActions.listChatsSucceeded(chatList));
+    }catch(error){
+        Alert.alert('Falha ao carregar conversas', error.message)
+        yield put(ChatActions.listChatsFailed());
+    }
+}
+
+function* createChat(action) {
+    const { users } = action.payload
+
+    try{
+
+        let chatsRef = firebase.firestore().collection('Chats');
+
+        const snapShot = yield call([
+            chatsRef.where('userIDs', 'array-contains-any', users),
+            chatsRef.get,
+        ]);
+
+        let chat;
+        
+        snapShot.forEach(document => {
+            chat = document.data();
+        });
+
+        if (chat === undefined) {
+            const timestamp = Math.floor(Date.now() / 1000);
+            yield firebase
+            .firestore()
+            .collection('Chats')
+            .add({
+                users: users,
+                userIDs: [users[0].id, users[1].id],
+                id: timestamp,
+                createdAt: timestamp,
+                lastModified: timestamp,
+                lastMessage: null
+            });
+        }
+
+        yield put(ChatActions.createChatSucceeded());
+    }catch(error){
+        yield put(ChatActions.createChatFailed(users));
+    }
+}
+
+function* updateChat(action) {
+    const { chatID, lastMessage } = action.payload
+
+    try{
+        let chatsRef = firebase.firestore().collection('Chats');
+
+        const snapShot = yield call([
+            chatsRef.where('id', '==', chatID),
+            chatsRef.get,
+        ]);
+
+        let chat;
+        let docID = null;
+        
+        snapShot.forEach(document => {
+            chat = document.data();
+            docID = document.id;
+        });
+
+        if (chat === undefined) {
+            throw new Error('Falha ao atualizar conversa')
+        } else {
+            yield chatsRef
+                .doc(docID)
+                .update({
+                    lastMessage: lastMessage,
+                    lastModified: lastMessage.createdAt
+                })
+        }
+
+        yield put(ChatActions.updateChatSucceeded());
+    }catch(error){
+        if(__DEV__) console.log('erro em chat update', error.message)
+        yield put(ChatActions.updateChatFailed());
     }
 }
 
@@ -459,10 +579,14 @@ function* mySaga() {
         takeLatest(profileTypes.SEND_TEXT_NOTIFICATION_REQUESTED, sendTextNotification),
         takeLatest(profileTypes.CLEAR_NOTIFICATIONS_REQUESTED, clearNotifications),
         takeLatest(petTypes.REGISTER_REQUESTED, registerPet),
+        takeLatest(petTypes.DELETE_REQUESTED, deletePet),
         takeLatest(petTypes.LIST_REQUESTED, listPets),
         takeLatest(petTypes.ADOPT_REQUESTED, adoptPet),
         takeLatest(petTypes.ACCEPT_ADOPTION_REQUESTED, acceptAdoption),
         takeLatest(petTypes.DECLINE_ADOPTION_REQUESTED, declineAdoption),
+        takeLatest(chatTypes.LIST_REQUESTED, listChat),
+        takeLatest(chatTypes.CREATE_CHAT_REQUESTED, createChat),
+        takeLatest(chatTypes.UPDATE_REQUESTED, updateChat),
     ]);
 }
 

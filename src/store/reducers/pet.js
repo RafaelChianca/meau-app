@@ -17,6 +17,12 @@ function pet (state = INITIAL_STATE, action) {
             return {...state, error: false, loading: false }
         case petTypes.REGISTER_FAILED:
             return {...state, error: true, loading: false }
+        case petTypes.DELETE_REQUESTED:
+            return {...state, loading: true }
+        case petTypes.DELETE_SUCCEEDED:
+            return {...state, error: false, loading: false }
+        case petTypes.DELETE_FAILED:
+            return {...state, error: true, loading: false }
         case petTypes.LIST_REQUESTED:
             return {...state, loading: true }
         case petTypes.LIST_SUCCEEDED:

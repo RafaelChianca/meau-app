@@ -1,13 +1,24 @@
 import { petTypes } from "../actionTypes"
 
-export const registerPetRequested = ( name, species, sex, size, age, temperment, health, diseases, conditions, time, about, ownerID, image ) => ({
+export const registerPetRequested = ( name, species, sex, size, age, temperment, health, diseases, conditions, time, about, owner, image ) => ({
     type: petTypes.REGISTER_REQUESTED,
-    payload: { name, species, sex, size, age, temperment, health, diseases, conditions, time, about, ownerID, image }
+    payload: { name, species, sex, size, age, temperment, health, diseases, conditions, time, about, owner, image }
 })
 export const registerPetSucceeded = () => ({
     type: petTypes.REGISTER_SUCCEEDED,
 })
 export const registerPetFailed = () =>({
+    type: petTypes.REGISTER_FAILED
+})
+
+export const deletePetRequested = ( petID ) => ({
+    type: petTypes.DELETE_REQUESTED,
+    payload: { petID }
+})
+export const deletePetSucceeded = () => ({
+    type: petTypes.REGISTER_SUCCEEDED,
+})
+export const deletePetFailed = () =>({
     type: petTypes.REGISTER_FAILED
 })
 
@@ -47,9 +58,9 @@ export const adoptPetFailed = () =>({
     type: petTypes.ADOPT_FAILED
 })
 
-export const acceptAdoptionRequested = (oldOwnerID, newOwnerID, petID) => ({
+export const acceptAdoptionRequested = (oldOwnerID, newOwner, petID) => ({
     type: petTypes.ACCEPT_ADOPTION_REQUESTED,
-    payload: { oldOwnerID, newOwnerID, petID }
+    payload: { oldOwnerID, newOwner, petID }
 })
 export const acceptAdoptionSucceeded = () => ({
     type: petTypes.ACCEPT_ADOPTION_SUCCEEDED
@@ -58,9 +69,9 @@ export const acceptAdoptionFailed = () => ({
     type: petTypes.ACCEPT_ADOPTION_FAILED
 })
 
-export const declineAdoptionRequested = (oldOwnerID, newOwnerID, petID) => ({
+export const declineAdoptionRequested = (oldOwnerID, newOwner, petID) => ({
     type: petTypes.DECLINE_ADOPTION_REQUESTED,
-    payload: { oldOwnerID, newOwnerID, petID }
+    payload: { oldOwnerID, newOwner, petID }
 })
 export const declineAdoptionSucceeded = () => ({
     type: petTypes.DECLINE_ADOPTION_SUCCEEDED

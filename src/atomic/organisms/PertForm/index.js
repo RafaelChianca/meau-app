@@ -247,7 +247,7 @@ export default function PertForm({ ...rest }) {
                 conditions,
                 time,
                 about,
-                user.id,
+                {id: user.id, name: user.name, imageURL: user?.imageURL},
                 image
             ))
         }
