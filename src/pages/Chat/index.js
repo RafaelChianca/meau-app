@@ -16,7 +16,6 @@ export default function Chat() {
             <CustomHeader
                 label='Chat'
                 leftIcon="menu"
-                rightIcon="search"
                 style={{backgroundColor: '#88c9bf'}}
             />
             <ContentContainer>
