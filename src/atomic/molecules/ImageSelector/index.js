@@ -1,5 +1,5 @@
 import React from 'react';
-import InputLabel from '../../atoms/InputLabel/index';
+import InputLabel from '../../atoms/InputLabel';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { Dropzone, AddImageText } from './styles';
 

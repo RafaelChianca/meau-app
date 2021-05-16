@@ -1,13 +1,19 @@
 import React from 'react';
-import { Input } from './styles';
+import { Input, ErrorText } from './styles';
 
-export default function CustomTextInput({ ...rest }) {
+export default function CustomTextInput({ error, ...rest }) {
   return (
-    <Input
-      scrollEnabled={false}
-      placeholderTextColor="#bdbdbd"
-      blurOnSubmit
-      {...rest}
-    />
+    <>
+      <Input
+        scrollEnabled={false}
+        placeholderTextColor="#bdbdbd"
+        blurOnSubmit
+        error={error}
+        {...rest}
+      />
+      {error &&
+        <ErrorText>{error}</ErrorText>
+      }
+    </>
   );
 }

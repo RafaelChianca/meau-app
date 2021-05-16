@@ -8,10 +8,11 @@ export const Button = styled.TouchableOpacity`
     align-items: center;
     border-radius: 4px;
     align-self: center;
+    opacity: ${props => props.disabled ? 0.5 : 1};
 `;
 
 export const Label = styled.Text`
-   color: ${props => props.disabled ? '#bdbdbd' : '#434343'};
+   color: #434343;
    font-size: 12px;
    text-transform: uppercase;
 `;

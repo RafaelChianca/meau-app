@@ -1,49 +1,115 @@
-import React from 'react';
-import {View, Text, TextInput, TouchableWithoutFeedback, StatusBar} from 'react-native';
-import styles from './styles';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { RectButton } from 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { StatusBar, Keyboard } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Container, FormContainer } from './styles';
+import FormTextInput from '../../atomic/molecules/FormTextInput';
+import CustomButton from '../../atomic/atoms/CustomButton';
+import { useNavigation } from '@react-navigation/native';
+import CustomHeader from '../../atomic/molecules/CustomHeader';
+import { loginRequested } from '../../store/actions/profile';
 
-export default class Login extends React.Component{
-    constructor(){
-        super();
+
+export default function Register() {
     
-        this.state = {
-            nome: '',
-            senha: '',
-        }
-    }
+    const loading = useSelector(state => state.profile.loading);
 
-    render(){
-        return(
-            <View style={styles.fundo}>
-                <StatusBar
-                animated={true}
-                backgroundColor="#88c9bf"
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState(null);
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState(null);
+
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        return () => {
+            setEmail('');
+            setPassword('');
+            setEmailError(null);
+            setPasswordError(null);
+        }
+    }, [])
+
+    const handlePress = async () => {
+        Keyboard.dismiss();
+
+        if (email?.length === 0) {
+          setEmailError('Por favor, digite seu email');
+        } else {
+          setEmailError(null);
+        }
+    
+        if (password?.length === 0) {
+          setPasswordError('Por favor, digite sua senha');
+          return
+        } else {
+          setPasswordError(null);
+        }
+
+        if (emailError || passwordError) return
+    
+        dispatch(loginRequested(email, password))
+    };
+
+    return(
+        <Container>
+            <StatusBar
+                animated
+                backgroundColor={'#88c9bf'}
                 barStyle={'light-content'}
+            />
+            <CustomHeader label='Login' showLeftIcon={false} style={{backgroundColor: '#cfe9e5'}} />
+            <FormContainer>
+                <FormTextInput
+                    placeholder="E-mail"
+                    placeholderTextColor='#bdbdbd'
+                    value={email}
+                    error={emailError}
+                    keyboardType="email-address"
+                    onChangeText={(email) => setEmail(email.trim())}
+                    containerStyle={{marginTop: 64, color:'#434343'}}
                 />
-                <View style={styles.header}>
-                    <TouchableWithoutFeedback>
-                        <Icon name='bars' color='#434343' size={24} style={{marginLeft: 16}}/> 
-                    </TouchableWithoutFeedback>
-                    <Text style={{marginLeft:30, fontSize:18}}>Login</Text>
-                </View>
-                <TextInput style={[styles.inputs, {marginTop: 64}]}
-                value={this.state.nome}
-                onChangeText={(nome) => this.setState({nome})}
-                placeholder={'Nome de Usuário'}
-                placeholderTextColor={'#bdbdbd'}
+                <FormTextInput
+                    placeholder='Senha'
+                    placeholderTextColor='#bdbdbd'
+                    error={passwordError}
+                    value={password}
+                    autoCapitalize="none"
+                    secureTextEntry={true}
+                    onChangeText={(password) => setPassword(password)}
+                    containerStyle={{marginTop: 20, color:'#434343'}}
+                    onSubmitEditing={handlePress}
                 />
-                <TextInput style={[styles.inputs, {marginTop: 20}]}
-                value={this.state.senha}
-                onChangeText={(senha) => this.setState({senha})}
-                placeholder={'Senha'}
-                placeholderTextColor={'#bdbdbd'}
+                <CustomButton
+                    label='ENTRAR'
+                    style={{
+                        backgroundColor: '#88c9bf',
+                        borderRadius: 2,
+                        width:232,
+                        height:40,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        marginTop: 52,
+                    }}
+                    onPress={handlePress}
                 />
-                <RectButton style={styles.botaoEntrar}>
-                    <Text>ENTRAR</Text>
-                </RectButton>
-            </View>
-            );
-    }
+                <CustomButton
+                    label='Não possui conta? Cadastre-se aqui'
+                    style={{
+                        backgroundColor: 'transparent',
+                        width: '100%',
+                        height:40,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        marginTop: 20,
+                    }}
+                    labelStyle={{color: '#88c9bf'}}
+                    onPress={() => navigation.navigate('Register')}
+                    loading={loading}
+                />
+            </FormContainer>
+        </Container>
+    );
 }

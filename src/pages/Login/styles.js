@@ -1,47 +1,36 @@
-import {StyleSheet} from 'react-native';
+import styled from 'styled-components/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const styles = StyleSheet.create({
-    fundo:{
-        backgroundColor: '#fafafa',
-        width: '100%',
-        height: '100%',
-    },
+export const Container = styled(SafeAreaView)`
+    flex: 1;
+    background-color: white;
+`;
 
-    barraSuperior:{
-        backgroundColor: '#88c9bf',
-        width: '100%',
-        height: 24
-    },
+export const Header = styled.View`
+    background-color: #cfe9e5;
+    width: 100%;
+    height: 56px;
+    flex-direction: row;
+    align-items: center;
+`;
 
-    header:{
-        backgroundColor: '#cfe9e5',
-        width: '100%',
-        height: 56,
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
+export const FormContainer = styled.View`
+    flex: 1;
+    padding-left: 28px;
+    padding-right: 28px;
+`;
 
-    inputs:{
-        color: '#434343',
-        fontSize: 17,
-        borderBottomColor: '#e6e7e8',
-        borderBottomWidth: 1,
-        width: 312,
-        alignSelf: 'center'
-    },
+export const Title = styled.Text`
+    font-size: 20px;
+    color: #434343;
+    margin-left: 32px;
 
-    botaoEntrar:{
-        backgroundColor: '#88c9bf',
-        borderRadius: 2,
-        width:232,
-        height:40,
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignSelf: 'center',
-        marginTop: 52,
-    }
+`;
 
-    
-});
-
-export default styles;
+export const Label = styled.Text`
+    color: #88c9bf;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-top: 28px;
+    margin-left: 28px;
+`;

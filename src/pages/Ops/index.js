@@ -1,43 +1,53 @@
 import React from 'react';
-import {View, Text, TouchableWithoutFeedback, StatusBar} from 'react-native';
-import styles from './styles';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { RectButton } from 'react-native-gesture-handler';
+import { StatusBar } from 'react-native';
+import { Container, Label, Ops} from './styles';
+import CustomButton from '../../atomic/atoms/CustomButton';
+import CustomHeader from '../../atomic/molecules/CustomHeader';
+import * as RootNavigation from '../../services/RootNavigation';
 
-export default class Ops extends React.Component{
-    constructor(){
-        super();
-    
-        this.state = {
+export default function Register() {
 
-        }
-    }
-
-    render(){
-        return(
-            <View style={styles.fundo}>
-                <StatusBar
-                animated={true}
+    return(
+        <Container>
+            <StatusBar
+                animated
                 backgroundColor="#88c9bf"
-                barStyle={'light-content'}
-                />
-                <View style={styles.header}>
-                    <TouchableWithoutFeedback>
-                        <Icon name='arrow-left' color='#434343' size={24} style={{marginLeft: 16}}/>
-                    </TouchableWithoutFeedback>
-                    <Text style={{marginLeft:30, fontSize:18}}>Cadastro</Text>
-                </View>
-                <Text style={styles.textoOps}>Ops!</Text>
-                <Text style={styles.texto}>Você não pode realizar esta ação sem</Text>
-                <Text style={[styles.texto]}>possuir cadastro.</Text>
-                <RectButton style={styles.botao}>
-                    <Text>FAZER CADASTRO</Text>
-                </RectButton>
-                <Text style={[styles.texto, {marginTop: 44}]}>Já possui cadastro?</Text>
-                <RectButton style={styles.botao}>
-                    <Text>FAZER LOGIN</Text>
-                </RectButton>
-            </View>
-            );
-    }
+                barStyle={"light-content"}
+            />
+            <CustomHeader label="Cadastro" style={{backgroundColor: '#cfe9e5'}} />
+            <Ops>Ops!</Ops>
+            <Label>Você não pode realizar esta ação sem</Label>
+            <Label>possuir cadastro</Label>
+            <CustomButton
+                label="FAZER CADASTRO"
+                style={{
+                    backgroundColor: '#88c9bf',
+                    borderRadius: 2,
+                    width:232,
+                    height:40,
+                    marginTop: 16,
+                    marginBottom: 44,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    alignSelf: 'center'
+                }}
+                onPress={() => RootNavigation.resetTo('Register')}
+            />
+            <Label>Já possui cadastro?</Label>
+            <CustomButton
+                label="FAZER LOGIN"
+                style={{
+                    backgroundColor: '#88c9bf',
+                    borderRadius: 2,
+                    width:232,
+                    height:40,
+                    marginTop: 16,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    alignSelf: 'center'
+                }}
+                onPress={() => RootNavigation.resetTo('Login')}
+            />
+        </Container>
+    );
 }

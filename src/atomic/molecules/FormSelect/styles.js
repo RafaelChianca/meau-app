@@ -10,3 +10,12 @@ export const SelectContainer = styled.View`
     overflow: hidden;
     flex-wrap: wrap;
 `;
+
+export const LabelContainer = styled.View`
+    margin-bottom: 16px;
+`;
+
+export const ErrorText = styled.Text`
+    color: red;
+    font-size: 10px;
+`;
